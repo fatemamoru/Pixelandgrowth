@@ -1,0 +1,97 @@
+/* css/tokens.css — single source of truth
+ *
+ * This file is the ONE shared styling location for the Pixel & Growth site
+ * (Req 12.4). Raw hex color values and font-family names MUST appear ONLY in
+ * this file; every other stylesheet and page references these variables.
+ */
+
+/* ---------------------------------------------------------------------------
+ * Self-hosted font faces (Req 2.2, 2.3)
+ *
+ * Poppins is the primary display font; Inter is the body/secondary font and
+ * the fallback for Poppins. All faces use `font-display: swap` so the browser
+ * renders text immediately in the next available font (Inter / system-ui) and
+ * swaps Poppins in when its woff2 finishes loading. This satisfies the
+ * "fall back to the secondary font within 3 seconds" intent (Req 2.3) without
+ * custom timers: text is never blocked waiting on the primary font.
+ *
+ * The referenced woff2 files are NOT committed here (binaries cannot be
+ * generated in this environment). See assets/fonts/README.md for the exact
+ * filenames and where to download the free, open-source fonts.
+ * ------------------------------------------------------------------------- */
+
+/* Poppins — primary (weights 400, 600, 700) */
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/poppins-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../assets/fonts/poppins-600.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../assets/fonts/poppins-700.woff2') format('woff2');
+}
+
+/* Inter — body / secondary / fallback (weights 400, 500, 700) */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/inter-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../assets/fonts/inter-500.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../assets/fonts/inter-700.woff2') format('woff2');
+}
+
+:root {
+  /* Brand palette (Req 2.1) */
+  --color-navy:       #142C4E;
+  --color-teal:       #20A68A;
+  --color-white:      #FFFFFF;
+  --color-grey-light: #F3F6FA;
+
+  /* Semantic roles mapped to palette (keeps usage on-brand) */
+  --color-text:       var(--color-navy);
+  --color-bg:         var(--color-white);
+  --color-surface:    var(--color-grey-light);
+  --color-accent:     var(--color-teal);
+
+  /* Inverse roles for text/surfaces on dark or accent backgrounds */
+  --color-text-inverse: var(--color-white);
+  --color-on-accent:    var(--color-white);
+
+  /* Fonts (Req 2.2): Poppins primary, Inter fallback */
+  --font-primary: 'Poppins', 'Inter', system-ui, sans-serif;
+  --font-body:    'Inter', system-ui, sans-serif;
+
+  /* Spacing scale (enables matching spacing across pages, Req 2.6) */
+  --space-1: 4px;  --space-2: 8px;  --space-3: 16px;
+  --space-4: 24px; --space-5: 40px; --space-6: 64px;
+
+  /* Breakpoints documented as reference (Req 8.1) */
+  --bp-tablet: 768px;
+  --bp-desktop: 1024px;
+}

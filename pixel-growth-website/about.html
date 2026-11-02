@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- SEO metadata — must match PAGE_METADATA.about in js/seo.js (Req 10.1, 10.2). -->
+    <title>About Pixel &amp; Growth | Our Mission &amp; Values</title>
+    <meta
+      name="description"
+      content="Learn about Pixel & Growth, the digital solutions agency helping small businesses grow online, and discover our mission, values, and client approach."
+    />
+    <!-- Shared styling: single token source + base + components (Req 12.4). -->
+    <link rel="stylesheet" href="css/tokens.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/components.css" />
+  </head>
+  <body data-page="about">
+    <!-- Shared Navigation_Menu landmark. Filled at runtime by components.js
+         (Req 12.2). The <noscript> fallback keeps navigation working when JS is
+         disabled or fails to load (Req 12.5). -->
+    <header data-component="site-nav">
+      <noscript>
+        <ul class="noscript-nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="portfolio.html">Portfolio</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </noscript>
+    </header>
+
+    <main class="page page--about">
+      <!-- The single top-level heading for this Page (Req 10.3). -->
+      <h1 class="page__title">About Pixel &amp; Growth</h1>
+
+      <!-- Introduction: 1–3 paragraphs (Req 4.1). -->
+      <section class="about-intro" data-section="intro" aria-labelledby="about-intro-heading">
+        <h2 id="about-intro-heading" class="section__title">Who We Are</h2>
+        <p>
+          Pixel &amp; Growth is a digital solutions agency built around a single
+          idea: small businesses deserve a professional online presence without
+          the complexity and cost that usually comes with it. We partner with
+          owners who are great at what they do but need a clear, capable team to
+          handle the web, marketing, and technology side of their work.
+        </p>
+        <p>
+          We focus on the essentials that move a small business forward: a clean
+          website, marketing that reaches the right people, and systems that are
+          simple to maintain. Our aim is to make the digital part of running a
+          business feel approachable rather than overwhelming.
+        </p>
+      </section>
+
+      <!-- Mission: at least 1 paragraph (Req 4.2). -->
+      <section class="about-mission" data-section="mission" aria-labelledby="about-mission-heading">
+        <h2 id="about-mission-heading" class="section__title">Our Mission</h2>
+        <p>
+          Our mission is to help small businesses build, connect, and grow
+          online. We want every client to have a presence they are proud of,
+          tools they understand, and a partner they can rely on as their
+          business changes. We measure our work by how much easier and more
+          confident we make the people we serve.
+        </p>
+      </section>
+
+      <!-- Values: 3–6 labeled values, each with a 1–2 sentence description (Req 4.3). -->
+      <section class="about-values" data-section="values" aria-labelledby="about-values-heading">
+        <h2 id="about-values-heading" class="section__title">Our Values</h2>
+        <ul class="values-list">
+          <li class="value-card">
+            <h3 class="value-card__title">Clarity</h3>
+            <p class="value-card__desc">
+              We explain our work in plain language and avoid jargon. You should
+              always understand what we are doing and why it matters for your
+              business.
+            </p>
+          </li>
+          <li class="value-card">
+            <h3 class="value-card__title">Craftsmanship</h3>
+            <p class="value-card__desc">
+              We take care with the details, from clean layouts to maintainable
+              code. Quality work today means fewer problems and lower costs
+              tomorrow.
+            </p>
+          </li>
+          <li class="value-card">
+            <h3 class="value-card__title">Partnership</h3>
+            <p class="value-card__desc">
+              We treat your goals as our own and stay honest about what will and
+              will not help. Good advice is part of the service, even when it is
+              not what sells more.
+            </p>
+          </li>
+          <li class="value-card">
+            <h3 class="value-card__title">Accessibility</h3>
+            <p class="value-card__desc">
+              We build for everyone, including visitors using assistive
+              technology and older devices. An inclusive site reaches more
+              customers and reflects well on your brand.
+            </p>
+          </li>
+          <li class="value-card">
+            <h3 class="value-card__title">Growth</h3>
+            <p class="value-card__desc">
+              We design with the next step in mind so your site and systems can
+              grow as you do. Progress should compound rather than require
+              starting over.
+            </p>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Approach: 3–6 sequenced steps, each with a title and description (Req 4.4). -->
+      <section class="about-approach" data-section="approach" aria-labelledby="about-approach-heading">
+        <h2 id="about-approach-heading" class="section__title">How We Work</h2>
+        <ol class="approach-steps">
+          <li class="approach-step">
+            <h3 class="approach-step__title">Discover</h3>
+            <p class="approach-step__desc">
+              We start by learning about your business, your customers, and your
+              goals. This shared understanding shapes every decision that
+              follows.
+            </p>
+          </li>
+          <li class="approach-step">
+            <h3 class="approach-step__title">Plan</h3>
+            <p class="approach-step__desc">
+              We agree on a focused scope and a realistic plan. You see what we
+              intend to build and how it supports the goals we discussed.
+            </p>
+          </li>
+          <li class="approach-step">
+            <h3 class="approach-step__title">Build</h3>
+            <p class="approach-step__desc">
+              We design and develop in clear stages, sharing progress as we go.
+              Regular check-ins keep the work aligned with your expectations.
+            </p>
+          </li>
+          <li class="approach-step">
+            <h3 class="approach-step__title">Launch</h3>
+            <p class="approach-step__desc">
+              We test carefully, then release your project with confidence. We
+              make sure everything works across devices before it goes live.
+            </p>
+          </li>
+          <li class="approach-step">
+            <h3 class="approach-step__title">Grow</h3>
+            <p class="approach-step__desc">
+              After launch we help you refine and expand based on real results.
+              Your presence keeps improving as your business evolves.
+            </p>
+          </li>
+        </ol>
+      </section>
+    </main>
+
+    <!-- Shared Footer landmark. Filled at runtime by components.js (Req 12.3).
+         Same <noscript> fallback pattern as the header (Req 12.5). -->
+    <footer data-component="site-footer">
+      <noscript>
+        <ul class="noscript-nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="portfolio.html">Portfolio</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </noscript>
+    </footer>
+
+    <!-- Deferred ES modules: shared components + per-page section guard (Req 11.4). -->
+    <script type="module" src="js/components.js"></script>
+    <script type="module" src="js/about-page.js"></script>
+  </body>
+</html>

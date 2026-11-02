@@ -1,0 +1,564 @@
+/* css/components.css — nav, footer, cards, buttons, form styles
+ *
+ * Component-level styling for the Pixel & Growth site. These rules style the
+ * exact classes produced by the shared component definition (js/components.js)
+ * and the pure render helpers (js/render.js), plus the Contact_Form fields and
+ * the graceful-degradation notices.
+ *
+ * Scope of THIS task (9.2): base + desktop component appearance only. The
+ * actual mobile show/hide media queries (hiding .nav-links behind .nav-toggle
+ * below 768px, re-showing at >=768px) are task 12.1. Here the base styles make
+ * the desktop layout correct and expose the component appearance; .nav-toggle
+ * is hidden by default (shown on mobile in 12.1).
+ *
+ * CONSISTENCY (Req 2.6): buttons, headings, and spacing are defined once here
+ * (headings live in base.css) and reused on every page so styling is identical
+ * across all five pages. Cards, nav, footer, and form controls all draw from
+ * the shared spacing scale.
+ *
+ * TOKENS ONLY (Req 12.4): this file references ONLY custom properties from
+ * tokens.css. No raw hex color values and no font-family name literals appear
+ * here. tokens.css (and base.css) must be linked before this file so the
+ * variables resolve.
+ */
+
+/* ===========================================================================
+ * Navigation (site-nav) — Req 1.9, 1.10, 2.4, 8.2
+ *
+ * Horizontal logo (icon left, name right), a horizontal list of five links,
+ * exactly one active-state indicator, and a mobile toggle button (hidden on
+ * desktop; shown + wired at the mobile breakpoint in task 12.1).
+ * =========================================================================== */
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  width: 100%;
+  max-width: var(--bp-desktop);
+  margin-inline: auto;
+  padding: var(--space-3);
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-surface);
+}
+
+/* Horizontal logo: icon on the LEFT, business name on the RIGHT (Req 2.4). */
+.site-nav__logo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  text-decoration: none;
+  color: var(--color-text);
+}
+
+.site-nav__logo:hover {
+  text-decoration: none;
+}
+
+.site-nav__logo-icon {
+  display: block;
+  width: 32px;
+  height: 32px;
+  flex: 0 0 auto;
+}
+
+.site-nav__logo-name {
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1;
+  color: var(--color-text);
+}
+
+/* Mobile collapsible toggle (Req 8.2). Hidden on desktop by default; the
+ * media queries in task 12.1 reveal it below 768px and wire its behavior. */
+.nav-toggle {
+  display: none;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: transparent;
+  color: var(--color-text);
+  border: 1px solid var(--color-text);
+  border-radius: var(--space-1);
+  cursor: pointer;
+  font-family: var(--font-primary);
+  font-weight: 600;
+}
+
+.nav-toggle:hover {
+  background: var(--color-surface);
+}
+
+/* Horizontal link list (Req 1.3). On desktop the links sit inline; the mobile
+ * collapse is applied in task 12.1. */
+.nav-links {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-item {
+  margin: 0;
+}
+
+.nav-link {
+  display: inline-block;
+  padding: var(--space-2) 0;
+  font-family: var(--font-primary);
+  font-weight: 600;
+  color: var(--color-text);
+  text-decoration: none;
+  /* Reserve the active-indicator space so switching pages never shifts text. */
+  border-bottom: 3px solid transparent;
+}
+
+.nav-link:hover {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+/* Active-state indicator: exactly one link per page (Req 1.6). A teal
+ * underline + accent text clearly marks the current page. */
+.nav-link.is-active {
+  color: var(--color-accent);
+  border-bottom-color: var(--color-accent);
+}
+
+/* ===========================================================================
+ * Footer (site-footer) — Req 1.8
+ *
+ * Business name, tagline, and links to all five pages, on the navy brand
+ * surface with inverse (white) text for contrast.
+ * =========================================================================== */
+
+footer[data-component="site-footer"] {
+  background: var(--color-navy);
+  color: var(--color-text-inverse);
+}
+
+.site-footer__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  max-width: var(--bp-desktop);
+  margin-inline: auto;
+  padding: var(--space-5) var(--space-3);
+  text-align: center;
+}
+
+.site-footer__brand {
+  margin: 0;
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--color-text-inverse);
+}
+
+.site-footer__tagline {
+  margin: 0 0 var(--space-3);
+  color: var(--color-text-inverse);
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-4);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.footer-item {
+  margin: 0;
+}
+
+.footer-link {
+  color: var(--color-text-inverse);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.footer-link:hover {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+
+/* ===========================================================================
+ * Button (single shared style) — Req 2.6
+ *
+ * One `.btn` base plus the `.btn-cta` variant used by renderButton() for every
+ * call-to-action, so button styling is identical on every page. Accent
+ * background, on-accent (white) text, consistent padding and radius, and a
+ * clear hover state.
+ * =========================================================================== */
+
+.btn {
+  display: inline-block;
+  padding: var(--space-3) var(--space-5);
+  font-family: var(--font-primary);
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  border: 2px solid transparent;
+  border-radius: var(--space-1);
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.btn:hover {
+  text-decoration: none;
+}
+
+.btn-cta {
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  border-color: var(--color-accent);
+}
+
+.btn-cta:hover,
+.btn-cta:focus-visible {
+  /* Invert on hover: accent outline with accent text on the base surface,
+   * keeping contrast on-brand without introducing a new color. */
+  background: var(--color-bg);
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+/* ===========================================================================
+ * Service card — Req 3.3, 5.2, 5.3
+ *
+ * Surface background, padding, and radius. Used for the Home services overview
+ * and the Services page list.
+ * =========================================================================== */
+
+.service-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  background: var(--color-surface);
+  border-radius: var(--space-2);
+}
+
+.service-card__title {
+  margin: 0;
+  color: var(--color-text);
+}
+
+.service-card__description {
+  margin: 0;
+  color: var(--color-text);
+}
+
+/* ===========================================================================
+ * Portfolio card — Req 6.2, 6.5
+ *
+ * Card surface with a prominent, non-interactive "Sample / Demonstration"
+ * badge so every demonstration project is clearly flagged as illustrative.
+ * =========================================================================== */
+
+.portfolio-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  background: var(--color-surface);
+  border-radius: var(--space-2);
+  overflow: hidden;
+}
+
+/* Prominent demonstration badge (Req 6.2). Accent background, on-accent text,
+ * pinned to the top-left corner of the card; non-interactive (it's a <span>). */
+.portfolio-card__label {
+  position: absolute;
+  top: var(--space-3);
+  left: var(--space-3);
+  z-index: 1;
+  display: inline-block;
+  padding: var(--space-1) var(--space-2);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-radius: var(--space-1);
+}
+
+.portfolio-card__image {
+  width: 100%;
+  height: auto;
+  border-radius: var(--space-1);
+}
+
+.portfolio-card__title {
+  margin: 0;
+  color: var(--color-text);
+}
+
+.portfolio-card__description {
+  margin: 0;
+  color: var(--color-text);
+}
+
+/* Empty-state message when no valid demonstration projects are available
+ * (Req 6.6); keeps the page layout rather than leaving it blank. */
+.portfolio-empty {
+  padding: var(--space-5) var(--space-3);
+  text-align: center;
+  color: var(--color-text);
+  background: var(--color-surface);
+  border-radius: var(--space-2);
+}
+
+/* ===========================================================================
+ * Contact form — Req 7.1–7.5, 9.2
+ *
+ * Labeled fields (label bound to each control), consistent control styling for
+ * inputs/textarea/select, and inline, field-specific validation messages. The
+ * exact markup is assembled in task 10.5; these styles target the conventional
+ * field wrapper (.form-field), the control classes, and the .field-error
+ * validation message the contact page emits.
+ * =========================================================================== */
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+  max-width: 560px;
+}
+
+/* One labeled field: label stacked above its control. */
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.form-field__label,
+.contact-form label {
+  font-family: var(--font-primary);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+/* Shared control appearance for text inputs, textarea, and select. */
+.contact-form input,
+.contact-form textarea,
+.contact-form select {
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  color: var(--color-text);
+  background: var(--color-bg);
+  border: 1px solid var(--color-navy);
+  border-radius: var(--space-1);
+}
+
+.contact-form textarea {
+  min-height: calc(var(--space-6) + var(--space-5));
+  resize: vertical;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus,
+.contact-form select:focus {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+  border-color: var(--color-accent);
+}
+
+/* Inline, field-specific validation message (Req 7.3, 7.4, 7.5). Uses the
+ * on-brand navy for the message text and a navy accent bar so no new raw color
+ * is introduced; invalid controls get an accent border to draw the eye. */
+.field-error {
+  margin: 0;
+  padding: var(--space-1) 0 0;
+  font-weight: 600;
+  color: var(--color-navy);
+}
+
+.form-field.is-invalid input,
+.form-field.is-invalid textarea,
+.form-field.is-invalid select,
+.contact-form input[aria-invalid="true"],
+.contact-form textarea[aria-invalid="true"],
+.contact-form select[aria-invalid="true"] {
+  border-color: var(--color-accent);
+  border-width: 2px;
+}
+
+/* The not-yet-connected placeholder confirmation (Req 7.6). Styled as an
+ * on-surface notice so it reads as informational, never a success/delivery
+ * claim. */
+.form-result {
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  color: var(--color-text);
+  background: var(--color-surface);
+  border-left: 4px solid var(--color-accent);
+  border-radius: var(--space-1);
+}
+
+/* ===========================================================================
+ * Graceful-degradation notices — Req 12.5
+ *
+ * Visible indications when a shared element is unavailable, and the
+ * <noscript> fallback navigation surfaced when JavaScript does not run.
+ * =========================================================================== */
+
+/* "Shared element unavailable" indication written by mountSharedComponents()
+ * when a reusable component fails to inject. Kept visible and on-surface so the
+ * failure is obvious while the rest of the page still renders. */
+.shared-unavailable {
+  margin: 0;
+  padding: var(--space-3);
+  text-align: center;
+  color: var(--color-text);
+  background: var(--color-surface);
+}
+
+/* No-JavaScript fallback nav list (embedded in each landmark as <noscript>
+ * content). Laid out as a simple horizontal list so navigation still works
+ * when JS is disabled or fails to load. */
+.noscript-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-4);
+  list-style: none;
+  margin: 0;
+  padding: var(--space-3);
+}
+
+.noscript-nav a {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+/* ===========================================================================
+ * Responsive layout & mobile menu behavior (task 12.1)
+ * Req 8.1, 8.2, 8.3, 8.4, 8.5, 4.7
+ *
+ * Mobile-first strategy: the BASE rules below (no media query) target the
+ * smallest supported Breakpoint (mobile, 320–767px). `min-width` media queries
+ * then progressively enhance the layout at the tablet (>=768px) and desktop
+ * (>=1024px) Breakpoints. These literal pixel values mirror the token
+ * references --bp-tablet (768px) and --bp-desktop (1024px) in tokens.css; CSS
+ * media query conditions cannot read var(), so the numbers are inlined here but
+ * kept in lock-step with those tokens.
+ *
+ * NO HORIZONTAL SCROLL (Req 8.3): fluid, percentage/relative-width containers
+ * plus `max-width: 100%` media (set in base.css) keep every layout inside the
+ * viewport at all widths. All sizing uses relative/token units — no fixed px
+ * widths that could force overflow.
+ *
+ * TOKENS ONLY (Req 12.4): no raw hex or font-family literals below.
+ * =========================================================================== */
+
+/* ---------------------------------------------------------------------------
+ * MOBILE BASE (320–767px) — nav collapses behind the toggle
+ *
+ * Below the tablet Breakpoint the five nav links are hidden by default and the
+ * toggle button is shown (Req 8.2). The links are revealed only when
+ * components.js adds the `is-open` class to the <ul class="nav-links"> (wired
+ * in js/components.js): the toggle flips aria-expanded and toggles is-open.
+ * ------------------------------------------------------------------------- */
+
+/* Show the hamburger/menu toggle on mobile (Req 8.2). */
+.nav-toggle {
+  display: inline-flex;
+}
+
+/* Hide the link list by default on mobile; it sits behind the toggle. */
+.nav-links {
+  display: none;
+  /* When shown on mobile the links stack vertically and span the full nav
+   * width, below the logo + toggle row. */
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  width: 100%;
+  flex-basis: 100%;
+}
+
+/* Revealed when the toggle is activated (components.js adds `is-open`). */
+.nav-links.is-open {
+  display: flex;
+}
+
+/* ---------------------------------------------------------------------------
+ * Fluid card grids — mobile base: single column (Req 8.5)
+ *
+ * The three card containers (Home services overview, Services page list, and
+ * the Portfolio list) are CSS grids. On mobile they are a single column so
+ * cards stack full-width; tablet/desktop media queries below add columns.
+ * `minmax(0, 1fr)` columns prevent intrinsic content (long words, images) from
+ * widening a track past the viewport (Req 8.3).
+ * ------------------------------------------------------------------------- */
+
+.service-card-grid,
+.services-list,
+#portfolio-list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+  width: 100%;
+}
+
+/* ---------------------------------------------------------------------------
+ * TABLET (>=768px) — re-show the nav links, hide the toggle, 2-column grids
+ * ------------------------------------------------------------------------- */
+
+@media (min-width: 768px) {
+  /* Nav links return to a horizontal inline row (Req 8.2). */
+  .nav-links {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    width: auto;
+    flex-basis: auto;
+  }
+
+  /* The toggle is only for the collapsed mobile menu; hide it at >=768px. */
+  .nav-toggle {
+    display: none;
+  }
+
+  /* Two-column card grids on tablet. */
+  .service-card-grid,
+  .services-list,
+  #portfolio-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * DESKTOP (>=1024px) — wider card grids
+ * ------------------------------------------------------------------------- */
+
+@media (min-width: 1024px) {
+  /* Three-column card grids give the services/portfolio listings a full
+   * multi-column layout on desktop (Req 8.5). */
+  .service-card-grid,
+  .services-list,
+  #portfolio-list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

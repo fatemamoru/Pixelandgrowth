@@ -1,0 +1,209 @@
+/* css/base.css — resets, base typography, landmark/layout base
+ *
+ * This stylesheet defines the shared foundational styles for every page:
+ * a modern reset, the base body typography, a single consistent heading
+ * type scale (Req 2.6 — identical heading styles across all five pages),
+ * base landmark/layout rules, responsive images, and a visible keyboard
+ * focus indicator (Req 9.5).
+ *
+ * IMPORTANT: this file references ONLY custom properties defined in
+ * tokens.css. No raw hex color values and no font-family name literals
+ * appear here — those live solely in tokens.css (Req 12.4). tokens.css
+ * must be linked before this file so the variables resolve.
+ */
+
+/* ---------------------------------------------------------------------------
+ * Modern reset
+ * ------------------------------------------------------------------------- */
+
+/* Border-box sizing everywhere, including pseudo-elements, so padding and
+ * borders never widen an element past its declared size. This underpins the
+ * no-horizontal-scroll responsive strategy (Req 8.3). */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove default margins/padding so spacing comes only from the token scale. */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* Honor reduced-motion preferences for any transitions/animations added later. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Document / body base
+ * ------------------------------------------------------------------------- */
+
+html {
+  /* Smooth in-page anchor scrolling; respects reduced-motion override above. */
+  scroll-behavior: smooth;
+  /* Prevent iOS text auto-inflation from overriding the 16px base. */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  /* Base body text is 16px — the minimum readable body size (Req 8.4). */
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--color-text);
+  background: var(--color-bg);
+  min-height: 100vh;
+  /* Crisper type rendering for the modern, professional brand feel. */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ---------------------------------------------------------------------------
+ * Heading type scale (Req 2.6 — defined ONCE, reused on every page)
+ *
+ * Headings use the primary (display) font; sizes, weights, line-heights, and
+ * bottom margins are declared a single time here so h1–h6 are visually
+ * identical across all five pages. Sizes use rem (relative to the 16px base).
+ * ------------------------------------------------------------------------- */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-primary);
+  color: var(--color-text);
+  line-height: 1.2;
+  margin-bottom: var(--space-3);
+  font-weight: 700;
+}
+
+h1 {
+  font-size: 2.5rem;  /* 40px */
+}
+
+h2 {
+  font-size: 2rem;    /* 32px */
+}
+
+h3 {
+  font-size: 1.5rem;  /* 24px */
+  font-weight: 600;
+}
+
+h4 {
+  font-size: 1.25rem; /* 20px */
+  font-weight: 600;
+}
+
+h5 {
+  font-size: 1.125rem; /* 18px */
+  font-weight: 600;
+}
+
+h6 {
+  font-size: 1rem;     /* 16px */
+  font-weight: 600;
+}
+
+/* ---------------------------------------------------------------------------
+ * Flow content base
+ * ------------------------------------------------------------------------- */
+
+p,
+ul,
+ol,
+figure,
+blockquote {
+  margin-bottom: var(--space-3);
+}
+
+/* Keep list markers inside the content box; indent with the token scale. */
+ul,
+ol {
+  padding-left: var(--space-4);
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+/* ---------------------------------------------------------------------------
+ * Responsive media
+ *
+ * Images and other embedded media never overflow their container, which keeps
+ * the layout within the viewport at every breakpoint (Req 8.3). */
+img,
+picture,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Form controls inherit typography rather than using UA defaults. */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+/* ---------------------------------------------------------------------------
+ * Landmark / layout base (Req 9.3 landmarks styled consistently)
+ * ------------------------------------------------------------------------- */
+
+header,
+nav,
+main,
+footer,
+section,
+article,
+aside {
+  display: block;
+}
+
+/* Constrain line length and center the primary content region. */
+main {
+  display: block;
+  width: 100%;
+  max-width: var(--bp-desktop);
+  margin-inline: auto;
+  padding: var(--space-5) var(--space-3);
+}
+
+/* ---------------------------------------------------------------------------
+ * Visible keyboard focus indicator (Req 9.5)
+ *
+ * :focus-visible applies the outline only for keyboard/assistive navigation,
+ * not mouse clicks, giving every interactive element a clearly visible focus
+ * ring in the brand accent color. The default outline is never removed for
+ * keyboard users. */
+:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Remove the UA focus ring only where :focus-visible is supported, so pointer
+ * users don't see a ring but keyboard users always do. */
+:focus:not(:focus-visible) {
+  outline: none;
+}

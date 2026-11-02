@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- SEO metadata: matches PAGE_METADATA.home in js/seo.js (Req 10.1, 10.2). -->
+    <title>Pixel &amp; Growth | Web &amp; Marketing Agency</title>
+    <meta
+      name="description"
+      content="Pixel & Growth helps small businesses build, connect, and grow online with professional website design, digital marketing, SEO, and social media."
+    />
+    <!-- Shared styling, single source of truth (Req 12.4). tokens.css first so -->
+    <!-- base.css and components.css can reference its custom properties. -->
+    <link rel="stylesheet" href="css/tokens.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/components.css" />
+  </head>
+  <body data-page="home">
+    <!-- Navigation landmark. components.js fills this on load; the <noscript> -->
+    <!-- fallback (identical to NOSCRIPT_FALLBACK in js/components.js) keeps -->
+    <!-- navigation working with JavaScript disabled (Req 12.5). -->
+    <header data-component="site-nav">
+      <noscript><ul class="noscript-nav"><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="services.html">Services</a></li><li><a href="portfolio.html">Portfolio</a></li><li><a href="contact.html">Contact</a></li></ul></noscript>
+    </header>
+
+    <main>
+      <!-- Hero (Req 3.1, 2.5): business name, tagline, and a CTA to Contact. -->
+      <!-- The single page <h1> lives here and carries the business name (Req 10.3). -->
+      <section class="hero" aria-labelledby="hero-heading">
+        <h1 id="hero-heading" class="hero__title">Pixel &amp; Growth</h1>
+        <p class="hero__tagline">Build. Connect. Grow.</p>
+        <p class="hero__lead">
+          A digital solutions agency helping small businesses establish and improve
+          their online presence.
+        </p>
+        <a class="btn btn-cta" href="contact.html">Start your project</a>
+      </section>
+
+      <!-- Introduction (Req 3.2): the agency's purpose. -->
+      <section class="intro" aria-labelledby="intro-heading">
+        <h2 id="intro-heading">Helping small businesses grow online</h2>
+        <p>
+          Pixel &amp; Growth partners with small businesses to build a stronger
+          online presence. From a clean, responsive website to practical marketing
+          and search visibility, we help you reach more customers and present your
+          brand with confidence.
+        </p>
+        <p>
+          We focus on clear, honest work: dependable design, straightforward
+          communication, and solutions that are simple to maintain as your business
+          grows.
+        </p>
+      </section>
+
+      <!-- Services overview (Req 3.3, 3.4): five service cards injected by -->
+      <!-- js/home.js into the grid below; each card links to the Services page. -->
+      <section
+        id="services-overview"
+        class="services-overview"
+        aria-labelledby="services-overview-heading"
+      >
+        <div class="services-overview__header">
+          <h2 id="services-overview-heading">What we do</h2>
+          <a class="services-overview__link" href="services.html">View all services</a>
+        </div>
+        <!-- Populated by js/home.js. The <noscript> fallback links to Services -->
+        <!-- so the overview still points visitors onward without JavaScript. -->
+        <div class="service-card-grid" data-service-cards>
+          <noscript>
+            <p><a href="services.html">View our five services</a></p>
+          </noscript>
+        </div>
+      </section>
+
+      <!-- Reasons to choose us (Req 3.6): strengths only, NO fabricated -->
+      <!-- customer results, metrics, testimonials, or client history. -->
+      <section class="reasons" aria-labelledby="reasons-heading">
+        <h2 id="reasons-heading">Reasons to choose us</h2>
+        <ul class="reasons__list">
+          <li class="reasons__item">
+            <h3>Small-business focus</h3>
+            <p>
+              We work specifically with small businesses, so our recommendations fit
+              your scale, budget, and goals.
+            </p>
+          </li>
+          <li class="reasons__item">
+            <h3>Clear communication</h3>
+            <p>
+              We explain our work in plain language and keep you informed at every
+              step, with no confusing jargon.
+            </p>
+          </li>
+          <li class="reasons__item">
+            <h3>Thoughtful, modern design</h3>
+            <p>
+              We build clean, responsive sites that look professional and work
+              smoothly across phones, tablets, and desktops.
+            </p>
+          </li>
+          <li class="reasons__item">
+            <h3>Maintainable solutions</h3>
+            <p>
+              We favour simple, reliable approaches you can keep running without
+              specialised tooling or ongoing surprises.
+            </p>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Contact CTA (Req 3.7): a CTA linking to the Contact page. -->
+      <section class="contact-cta" aria-labelledby="contact-cta-heading">
+        <h2 id="contact-cta-heading">Ready to grow your online presence?</h2>
+        <p>
+          Tell us about your business and the service you are most interested in.
+          We would love to help you take the next step.
+        </p>
+        <a class="btn btn-cta" href="contact.html">Get in touch</a>
+      </section>
+    </main>
+
+    <!-- Footer landmark. components.js fills this on load; the <noscript> -->
+    <!-- fallback (identical to NOSCRIPT_FALLBACK) keeps navigation working -->
+    <!-- with JavaScript disabled (Req 12.5). -->
+    <footer data-component="site-footer">
+      <noscript><ul class="noscript-nav"><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="services.html">Services</a></li><li><a href="portfolio.html">Portfolio</a></li><li><a href="contact.html">Contact</a></li></ul></noscript>
+    </footer>
+
+    <!-- Deferred ES modules (type="module" is deferred by default), so scripts -->
+    <!-- never block above-the-fold rendering (Req 11.4). -->
+    <script type="module" src="js/components.js"></script>
+    <script type="module" src="js/home.js"></script>
+  </body>
+</html>

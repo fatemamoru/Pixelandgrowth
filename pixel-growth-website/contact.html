@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- SEO metadata matches PAGE_METADATA.contact in js/seo.js (single source of truth). -->
+    <title>Contact Pixel &amp; Growth | Start Your Project</title>
+    <meta
+      name="description"
+      content="Contact Pixel & Growth to discuss helping your small business grow online. Tell us about your project and the service you are most interested in today."
+    />
+
+    <!-- Shared styling: tokens first (brand palette/fonts), then base, then components. -->
+    <link rel="stylesheet" href="css/tokens.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/components.css" />
+  </head>
+  <body data-page="contact">
+    <!--
+      Shared navigation landmark. components.js fills this on load.
+      The <noscript> list keeps navigation working when JavaScript is disabled
+      or fails to load (Req 12.5).
+    -->
+    <header data-component="site-nav">
+      <noscript>
+        <ul class="noscript-nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="portfolio.html">Portfolio</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </noscript>
+    </header>
+
+    <main class="page page--contact">
+      <!-- Exactly ONE <h1> on the page (Req 10.3). -->
+      <section class="contact-intro">
+        <h1 class="page-title">Contact Us</h1>
+        <p class="page-lead">
+          Tell us about your business and the service you are most interested
+          in. We would love to hear what you are building.
+        </p>
+      </section>
+
+      <!--
+        Contact_Form (Req 7.1, 7.2, 9.2). Every control has a visible <label for>
+        bound to the control id, an empty inline error container referenced via
+        aria-describedby, and the form is rendered with novalidate so our own
+        field-specific validation (js/contact.js + js/validation.js) runs instead
+        of the browser's default messages.
+
+        NOTE (Req 7.7): the page contains NO business address and NO phone number.
+      -->
+      <section class="contact-section" aria-labelledby="contact-heading">
+        <h2 id="contact-heading" class="section-title">Send us a message</h2>
+
+        <form class="contact-form" id="contact-form" novalidate>
+          <!-- Name — required (Req 7.1, 7.3). -->
+          <div class="form-field">
+            <label for="name">Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              autocomplete="name"
+              required
+              aria-describedby="name-error"
+            />
+            <p class="field-error" id="name-error" aria-live="polite"></p>
+          </div>
+
+          <!-- Email — required, format validated (Req 7.1, 7.5). -->
+          <div class="form-field">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              autocomplete="email"
+              required
+              aria-describedby="email-error"
+            />
+            <p class="field-error" id="email-error" aria-live="polite"></p>
+          </div>
+
+          <!-- Business name — optional (Req 7.1). -->
+          <div class="form-field">
+            <label for="businessName">Business name (optional)</label>
+            <input
+              type="text"
+              id="businessName"
+              name="businessName"
+              autocomplete="organization"
+              aria-describedby="businessName-error"
+            />
+            <p class="field-error" id="businessName-error" aria-live="polite"></p>
+          </div>
+
+          <!-- Service of interest — selection of the five Services (Req 7.1, 7.2).
+               Options are populated by js/contact.js from SERVICES (single source
+               of truth). A static fallback option keeps the control usable if the
+               module fails to load. -->
+          <div class="form-field">
+            <label for="serviceOfInterest">Service of interest</label>
+            <select
+              id="serviceOfInterest"
+              name="serviceOfInterest"
+              aria-describedby="serviceOfInterest-error"
+            >
+              <option value="">Select a service</option>
+            </select>
+            <p
+              class="field-error"
+              id="serviceOfInterest-error"
+              aria-live="polite"
+            ></p>
+          </div>
+
+          <!-- Message — required (Req 7.1, 7.4). -->
+          <div class="form-field">
+            <label for="message">Message</label>
+            <textarea
+              id="message"
+              name="message"
+              rows="6"
+              required
+              aria-describedby="message-error"
+            ></textarea>
+            <p class="field-error" id="message-error" aria-live="polite"></p>
+          </div>
+
+          <button class="btn btn-cta" type="submit">Send message</button>
+
+          <!--
+            Placeholder confirmation target (Req 7.6). js/contact.js writes the
+            "not yet connected" message here on a valid submit. role="status"
+            announces it to assistive tech; it never claims the message was sent.
+          -->
+          <div class="form-result" role="status" aria-live="polite"></div>
+        </form>
+      </section>
+    </main>
+
+    <!--
+      Shared footer landmark. components.js fills this on load; the <noscript>
+      list keeps footer navigation available without JavaScript (Req 12.5).
+    -->
+    <footer data-component="site-footer">
+      <noscript>
+        <ul class="noscript-nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="portfolio.html">Portfolio</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </noscript>
+    </footer>
+
+    <!-- Deferred ES modules: shared components and the contact-page wiring. -->
+    <script type="module" src="js/components.js"></script>
+    <script type="module" src="js/contact.js"></script>
+  </body>
+</html>

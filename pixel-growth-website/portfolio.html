@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Metadata matches PAGE_METADATA.portfolio in js/seo.js (Req 10.1, 10.2, 10.3). -->
+    <title>Portfolio | Pixel &amp; Growth Sample Project Work</title>
+    <meta
+      name="description"
+      content="Browse sample demonstration projects from Pixel &amp; Growth that showcase the quality and style of web design and digital work we create for businesses."
+    />
+    <link rel="stylesheet" href="css/tokens.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/components.css" />
+  </head>
+  <body data-page="portfolio">
+    <!-- Shared Navigation_Menu landmark. components.js fills this on load; the
+         <noscript> five-link list is the no-JavaScript fallback (Req 9.3, 12.5). -->
+    <header data-component="site-nav">
+      <noscript>
+        <ul class="noscript-nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="portfolio.html">Portfolio</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </noscript>
+    </header>
+
+    <main>
+      <h1>Portfolio</h1>
+      <!-- These are illustrative sample/demonstration projects, not real client
+           work, testimonials, or results (Req 6.4). -->
+      <p class="portfolio-intro">
+        The work below is a set of sample demonstration projects created to
+        illustrate the quality and style of what Pixel &amp; Growth produces.
+        These are not real client projects, and they do not represent actual
+        customers, testimonials, or results.
+      </p>
+
+      <!-- portfolio-page.js renders demonstration cards here via
+           renderPortfolioList. It handles sample labels, omitting invalid
+           entries, and the "coming soon" empty state (Req 6.5, 6.6, 6.7). -->
+      <div id="portfolio-list"></div>
+    </main>
+
+    <!-- Shared Footer landmark with the same <noscript> five-link fallback. -->
+    <footer data-component="site-footer">
+      <noscript>
+        <ul class="noscript-nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="portfolio.html">Portfolio</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </noscript>
+    </footer>
+
+    <script type="module" src="js/components.js"></script>
+    <script type="module" src="js/portfolio-page.js"></script>
+  </body>
+</html>
