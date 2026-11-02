@@ -47,6 +47,7 @@ export const PROJECTS = [
     image: {
       webp: 'assets/img/project-1.webp',
       avif: 'assets/img/project-1.avif',
+      fallbackSrc: 'assets/img/project-1.svg',
       alt: 'Demonstration mockup of a neighborhood bakery website homepage.',
       width: 1200,
       height: 800,
@@ -60,6 +61,7 @@ export const PROJECTS = [
     image: {
       webp: 'assets/img/project-2.webp',
       avif: 'assets/img/project-2.avif',
+      fallbackSrc: 'assets/img/project-2.svg',
       alt: 'Demonstration mockup of a boutique fitness studio landing page.',
       width: 1200,
       height: 800,
@@ -73,6 +75,7 @@ export const PROJECTS = [
     image: {
       webp: 'assets/img/project-3.webp',
       avif: 'assets/img/project-3.avif',
+      fallbackSrc: 'assets/img/project-3.svg',
       alt: 'Demonstration mockup of an independent coffee roaster brand kit.',
       width: 1200,
       height: 800,
@@ -86,6 +89,7 @@ export const PROJECTS = [
     image: {
       webp: 'assets/img/project-4.webp',
       avif: 'assets/img/project-4.avif',
+      fallbackSrc: 'assets/img/project-4.svg',
       alt: 'Demonstration mockup of a handmade goods online store product grid.',
       width: 1200,
       height: 800,
@@ -99,6 +103,7 @@ export const PROJECTS = [
     image: {
       webp: 'assets/img/project-5.webp',
       avif: 'assets/img/project-5.avif',
+      fallbackSrc: 'assets/img/project-5.svg',
       alt: 'Demonstration mockup of a small consulting firm website.',
       width: 1200,
       height: 800,
@@ -112,6 +117,7 @@ export const PROJECTS = [
     image: {
       webp: 'assets/img/project-6.webp',
       avif: 'assets/img/project-6.avif',
+      fallbackSrc: 'assets/img/project-6.svg',
       alt: 'Demonstration mockup of a family restaurant social media template set.',
       width: 1200,
       height: 800,

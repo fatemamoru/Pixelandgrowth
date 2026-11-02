@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-label="Independent Coffee Roaster Brand Kit demonstration">
+  <rect width="1200" height="800" fill="#F3F6FA"/>
+  <rect x="0" y="0" width="1200" height="220" fill="#142C4E"/>
+  <rect x="0" y="220" width="1200" height="10" fill="#20A68A"/>
+  <circle cx="140" cy="110" r="46" fill="#20A68A"/>
+  <rect x="112" y="96" width="56" height="28" rx="4" fill="#FFFFFF"/>
+  <text x="230" y="100" font-family="system-ui, Segoe UI, Roboto, sans-serif" font-size="46" font-weight="700" fill="#FFFFFF">Pixel &amp; Growth</text>
+  <text x="230" y="150" font-family="system-ui, Segoe UI, Roboto, sans-serif" font-size="28" fill="#F3F6FA">Brand Kit demonstration</text>
+  <g fill="#d7dbe4">
+    <rect x="80"  y="300" width="480" height="300" rx="10"/>
+    <rect x="620" y="300" width="500" height="44" rx="8"/>
+    <rect x="620" y="372" width="500" height="20" rx="6"/>
+    <rect x="620" y="408" width="420" height="20" rx="6"/>
+    <rect x="620" y="444" width="460" height="20" rx="6"/>
+    <rect x="620" y="520" width="220" height="60" rx="10" fill="#20A68A"/>
+  </g>
+  <g fill="#aeb4c2">
+    <circle cx="200" cy="400" r="40"/>
+    <path d="M140 540 l120 -130 90 90 70 -60 140 100 z"/>
+  </g>
+  <text x="600" y="700" text-anchor="middle" font-family="system-ui, Segoe UI, Roboto, sans-serif" font-size="40" font-weight="700" fill="#142C4E">Independent Coffee Roaster</text>
+  <text x="600" y="748" text-anchor="middle" font-family="system-ui, Segoe UI, Roboto, sans-serif" font-size="24" letter-spacing="3" fill="#8a90a0">SAMPLE / DEMONSTRATION</text>
+</svg>

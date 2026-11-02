@@ -190,11 +190,13 @@ export function renderPortfolioCard(project) {
   // The <img> fallback: prefer the WebP path as its src, falling back to AVIF
   // if only that is provided. Width/height reserve space to avoid layout shift.
   const imgSrc =
-    typeof image.webp === 'string' && image.webp.length > 0
-      ? image.webp
-      : typeof image.avif === 'string' && image.avif.length > 0
-        ? image.avif
-        : '';
+    typeof image.fallbackSrc === 'string' && image.fallbackSrc.length > 0
+      ? image.fallbackSrc
+      : typeof image.webp === 'string' && image.webp.length > 0
+        ? image.webp
+        : typeof image.avif === 'string' && image.avif.length > 0
+          ? image.avif
+          : '';
 
   const altText = typeof image.alt === 'string' ? image.alt : '';
   const widthAttr = Number.isFinite(image.width) ? ` width="${escapeHtml(image.width)}"` : '';
