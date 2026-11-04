@@ -1,25 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  Neutral, on-brand light-grey placeholder shown when a demonstration image
-  fails to load (Req 11.5). It carries no intrinsic pixel size of its own:
-  the <img> that swaps to it keeps its declared width/height attributes, so
-  the placeholder fills the already-reserved box and no layout shift occurs.
-
-  preserveAspectRatio="none" lets the 4:3 artwork stretch to whatever box the
-  card reserved, so the fallback always fills the reserved dimensions exactly.
--->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"
-     preserveAspectRatio="none" role="img"
-     aria-label="Sample image unavailable">
-  <rect width="400" height="300" fill="#e9eaee"/>
-  <rect x="0.5" y="0.5" width="399" height="299" fill="none"
-        stroke="#cfd2da" stroke-width="1"/>
-  <g fill="#aeb2bd">
-    <rect x="150" y="110" width="100" height="70" rx="6"/>
-    <circle cx="178" cy="134" r="10" fill="#e9eaee"/>
-    <path d="M158 174l26-28 18 18 14-12 26 22z" fill="#e9eaee"/>
-  </g>
-  <text x="200" y="210" text-anchor="middle"
-        font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif"
-        font-size="18" fill="#8a8f9c">Image unavailable</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" preserveAspectRatio="none" role="img" aria-label="Sample image unavailable">
+  <rect width="400" height="300" fill="#F1ECE0"/>
+  <rect x="0.5" y="0.5" width="399" height="299" fill="none" stroke="#4B5A70" stroke-opacity="0.25"/>
+  <text x="200" y="158" text-anchor="middle" font-family="Inter, system-ui, Segoe UI, Roboto, sans-serif" font-size="18" fill="#4B5A70">Image unavailable</text>
 </svg>

@@ -1,49 +1,47 @@
 /* css/tokens.css — single source of truth
  *
- * This file is the ONE shared styling location for the Pixel & Growth site
- * (Req 12.4). Raw hex color values and font-family names MUST appear ONLY in
- * this file; every other stylesheet and page references these variables.
+ * The ONE shared styling location for the Pixel & Growth site (Req 12.4).
+ * Raw hex color values and font-family names MUST appear ONLY in this file;
+ * every other stylesheet references these variables.
+ *
+ * Direction: deep navy + warm gold. Playfair Display (serif) carries headings
+ * for an editorial, premium tone; Inter carries body copy for clarity.
  */
 
 /* ---------------------------------------------------------------------------
  * Self-hosted font faces (Req 2.2, 2.3)
  *
- * Poppins is the primary display font; Inter is the body/secondary font and
- * the fallback for Poppins. All faces use `font-display: swap` so the browser
- * renders text immediately in the next available font (Inter / system-ui) and
- * swaps Poppins in when its woff2 finishes loading. This satisfies the
- * "fall back to the secondary font within 3 seconds" intent (Req 2.3) without
- * custom timers: text is never blocked waiting on the primary font.
- *
- * The referenced woff2 files are NOT committed here (binaries cannot be
- * generated in this environment). See assets/fonts/README.md for the exact
- * filenames and where to download the free, open-source fonts.
+ * Playfair Display is the primary display font; Inter is the body/secondary
+ * font and the fallback for Playfair Display. All faces use
+ * `font-display: swap` so text renders immediately in the next available font
+ * and the primary font swaps in when its woff2 finishes loading.
+ * Files live in assets/fonts/ (see the README there).
  * ------------------------------------------------------------------------- */
 
-/* Poppins — primary (weights 400, 600, 700) */
+/* Playfair Display — primary (headings) */
 @font-face {
-  font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('../assets/fonts/poppins-400.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'Poppins';
+  font-family: 'Playfair Display';
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url('../assets/fonts/poppins-600.woff2') format('woff2');
+  src: url('../assets/fonts/playfair-display-600.woff2') format('woff2');
 }
 @font-face {
-  font-family: 'Poppins';
+  font-family: 'Playfair Display';
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url('../assets/fonts/poppins-700.woff2') format('woff2');
+  src: url('../assets/fonts/playfair-display-700.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../assets/fonts/playfair-display-700-italic.woff2') format('woff2');
 }
 
-/* Inter — body / secondary / fallback (weights 400, 500, 700) */
+/* Inter — body / secondary / fallback */
 @font-face {
   font-family: 'Inter';
   font-style: normal;
@@ -61,35 +59,59 @@
 @font-face {
   font-family: 'Inter';
   font-style: normal;
-  font-weight: 700;
+  font-weight: 600;
   font-display: swap;
-  src: url('../assets/fonts/inter-700.woff2') format('woff2');
+  src: url('../assets/fonts/inter-600.woff2') format('woff2');
 }
 
 :root {
   /* Brand palette (Req 2.1) */
-  --color-navy:       #142C4E;
-  --color-teal:       #20A68A;
-  --color-white:      #FFFFFF;
-  --color-grey-light: #F3F6FA;
+  --color-navy:        #0B1F3A;  /* deep navy: primary dark surface + text */
+  --color-navy-soft:   #14305A;  /* lifted navy: gradients, dark cards */
+  --color-gold:        #C9A24B;  /* warm gold: accent on dark, buttons */
+  --color-gold-deep:   #7A5F1E;  /* deep gold: accent TEXT on light surfaces */
+  --color-white:       #FFFFFF;
+  --color-ivory:       #FAF7F0;  /* warm off-white page surface */
+  --color-sand:        #F1ECE0;  /* slightly deeper alternate surface */
+  --color-slate:       #4B5A70;  /* muted body text on light surfaces */
+  --color-error:       #9B1C1C;  /* form validation messages */
 
-  /* Semantic roles mapped to palette (keeps usage on-brand) */
-  --color-text:       var(--color-navy);
-  --color-bg:         var(--color-white);
-  --color-surface:    var(--color-grey-light);
-  --color-accent:     var(--color-teal);
+  /* Semantic roles mapped to the palette */
+  --color-text:        var(--color-navy);
+  --color-text-muted:  var(--color-slate);
+  --color-bg:          var(--color-white);
+  --color-surface:     var(--color-ivory);
+  --color-surface-alt: var(--color-sand);
+  --color-accent:      var(--color-gold);
+  --color-accent-text: var(--color-gold-deep);
 
   /* Inverse roles for text/surfaces on dark or accent backgrounds */
   --color-text-inverse: var(--color-white);
-  --color-on-accent:    var(--color-white);
+  --color-on-accent:    var(--color-navy);  /* navy on gold = high contrast */
 
-  /* Fonts (Req 2.2): Poppins primary, Inter fallback */
-  --font-primary: 'Poppins', 'Inter', system-ui, sans-serif;
+  /* Hairlines and shadows derived from the palette */
+  --color-line:         rgba(11, 31, 58, 0.12);
+  --color-line-inverse: rgba(255, 255, 255, 0.16);
+  --shadow-sm: 0 1px 2px rgba(11, 31, 58, 0.06), 0 2px 8px rgba(11, 31, 58, 0.06);
+  --shadow-md: 0 8px 28px rgba(11, 31, 58, 0.12);
+  --shadow-lg: 0 18px 48px rgba(11, 31, 58, 0.18);
+
+  /* Fonts (Req 2.2): Playfair Display primary, Inter fallback/body */
+  --font-primary: 'Playfair Display', 'Inter', Georgia, serif;
   --font-body:    'Inter', system-ui, sans-serif;
 
-  /* Spacing scale (enables matching spacing across pages, Req 2.6) */
+  /* Spacing scale (matching spacing across pages, Req 2.6) */
   --space-1: 4px;  --space-2: 8px;  --space-3: 16px;
   --space-4: 24px; --space-5: 40px; --space-6: 64px;
+  --space-7: 96px; --space-8: 128px;
+
+  /* Shape */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+
+  /* Layout */
+  --container-max: 1120px;
 
   /* Breakpoints documented as reference (Req 8.1) */
   --bp-tablet: 768px;

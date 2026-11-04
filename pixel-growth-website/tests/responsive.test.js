@@ -222,7 +222,7 @@ describe('No horizontal scroll guards 320-1920px (Req 8.3, 4.7)', () => {
   it('constrains primary containers to the viewport via max-width, not fixed px (base.css)', () => {
     // main is capped at a token max-width and centered, but still width:100%,
     // so it shrinks to narrow viewports instead of forcing scroll.
-    expect(baseCss).toMatch(/max-width:\s*var\(--bp-desktop\)/i);
+    expect(baseCss).toMatch(/var\(--container-max\)/i);
     expect(baseCss).toMatch(/main\s*\{[^}]*width:\s*100%/i);
   });
 

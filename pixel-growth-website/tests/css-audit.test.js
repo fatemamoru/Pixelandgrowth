@@ -8,10 +8,10 @@
 //     ONLY in tokens.css. base.css and components.css must reference the brand
 //     palette exclusively through var(--...) custom properties.
 //   - Brand palette present (Req 2.1): tokens.css declares the four brand hex
-//     values — navy #142C4E, teal #20A68A, white #FFFFFF, light grey #F3F6FA.
+//     values — navy #0B1F3A, gold #C9A24B, white #FFFFFF, ivory #FAF7F0.
 //   - Font-display swap (Req 2.3): every @font-face block in tokens.css uses
 //     font-display: swap so text is never blocked on the primary font.
-//   - Font stack order (Req 2.2): --font-primary lists Poppins before Inter.
+//   - Font stack order (Req 2.2): --font-primary lists Playfair Display before Inter.
 //
 // No DOM is needed — this is pure text analysis of the source files.
 
@@ -33,7 +33,7 @@ function readCss(fileName) {
 const HEX_RE = /#[0-9a-fA-F]{3,8}\b/g;
 
 // The four brand palette colors that must live in tokens.css (Req 2.1).
-const BRAND_HEX = ['#142C4E', '#20A68A', '#FFFFFF', '#F3F6FA'];
+const BRAND_HEX = ['#0B1F3A', '#C9A24B', '#FFFFFF', '#FAF7F0'];
 
 describe('CSS audit — hex colors only in tokens.css (Req 2.1, 12.4)', () => {
   it('base.css contains no raw hex color literals', () => {
@@ -86,7 +86,7 @@ describe('CSS audit — @font-face uses font-display: swap (Req 2.3)', () => {
 });
 
 describe('CSS audit — font stack order (Req 2.2)', () => {
-  it('--font-primary lists Poppins before Inter', () => {
+  it('--font-primary lists Playfair Display before Inter', () => {
     const css = readCss('tokens.css');
 
     // Extract the --font-primary declaration value.
@@ -94,11 +94,11 @@ describe('CSS audit — font stack order (Req 2.2)', () => {
     expect(match).not.toBeNull();
 
     const value = match[1];
-    const poppinsIdx = value.indexOf('Poppins');
+    const primaryIdx = value.indexOf('Playfair Display');
     const interIdx = value.indexOf('Inter');
 
-    expect(poppinsIdx).toBeGreaterThanOrEqual(0);
+    expect(primaryIdx).toBeGreaterThanOrEqual(0);
     expect(interIdx).toBeGreaterThanOrEqual(0);
-    expect(poppinsIdx).toBeLessThan(interIdx);
+    expect(primaryIdx).toBeLessThan(interIdx);
   });
 });

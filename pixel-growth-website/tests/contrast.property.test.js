@@ -18,20 +18,37 @@ import fc from 'fast-check';
 
 // --- Brand palette (mirrors css/tokens.css) ---
 const PALETTE = {
-  navy: '#142C4E',
-  teal: '#20A68A',
+  navy: '#0B1F3A',
+  navySoft: '#14305A',
+  gold: '#C9A24B',
+  goldDeep: '#7A5F1E',
   white: '#FFFFFF',
-  greyLight: '#F3F6FA',
+  ivory: '#FAF7F0',
+  sand: '#F1ECE0',
+  slate: '#4B5A70',
+  error: '#9B1C1C',
 };
 
 // --- Declared on-brand role pairings used on the site ---
 // body: normal body text, requires >= 4.5:1
 // large: large text / buttons, requires >= 3:1
 const PAIRINGS = [
+  // Body copy and headings on light surfaces
   { name: 'navy text on white bg', text: PALETTE.navy, bg: PALETTE.white, kind: 'body', threshold: 4.5 },
-  { name: 'navy text on light-grey bg', text: PALETTE.navy, bg: PALETTE.greyLight, kind: 'body', threshold: 4.5 },
-  { name: 'white text on navy bg', text: PALETTE.white, bg: PALETTE.navy, kind: 'large', threshold: 3 },
-  { name: 'white text on teal bg', text: PALETTE.white, bg: PALETTE.teal, kind: 'large', threshold: 3 },
+  { name: 'navy text on ivory bg', text: PALETTE.navy, bg: PALETTE.ivory, kind: 'body', threshold: 4.5 },
+  { name: 'navy text on sand bg', text: PALETTE.navy, bg: PALETTE.sand, kind: 'body', threshold: 4.5 },
+  { name: 'slate muted text on white bg', text: PALETTE.slate, bg: PALETTE.white, kind: 'body', threshold: 4.5 },
+  { name: 'slate muted text on ivory bg', text: PALETTE.slate, bg: PALETTE.ivory, kind: 'body', threshold: 4.5 },
+  { name: 'deep gold accent text on white bg', text: PALETTE.goldDeep, bg: PALETTE.white, kind: 'body', threshold: 4.5 },
+  { name: 'deep gold accent text on ivory bg', text: PALETTE.goldDeep, bg: PALETTE.ivory, kind: 'body', threshold: 4.5 },
+  { name: 'form error text on white bg', text: PALETTE.error, bg: PALETTE.white, kind: 'body', threshold: 4.5 },
+  // Text on dark surfaces
+  { name: 'white text on navy bg', text: PALETTE.white, bg: PALETTE.navy, kind: 'body', threshold: 4.5 },
+  { name: 'white text on navy-soft bg', text: PALETTE.white, bg: PALETTE.navySoft, kind: 'body', threshold: 4.5 },
+  { name: 'gold accent text on navy bg', text: PALETTE.gold, bg: PALETTE.navy, kind: 'body', threshold: 4.5 },
+  { name: 'gold accent text on navy-soft bg', text: PALETTE.gold, bg: PALETTE.navySoft, kind: 'body', threshold: 4.5 },
+  // Gold buttons and the gold call-to-action band
+  { name: 'navy text on gold bg (buttons, CTA band)', text: PALETTE.navy, bg: PALETTE.gold, kind: 'body', threshold: 4.5 },
 ];
 
 // --- WCAG relative-luminance contrast-ratio calculator ---

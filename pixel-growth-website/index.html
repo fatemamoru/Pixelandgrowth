@@ -26,30 +26,65 @@
     <main>
       <!-- Hero (Req 3.1, 2.5): business name, tagline, and a CTA to Contact. -->
       <!-- The single page <h1> lives here and carries the business name (Req 10.3). -->
-      <section class="hero" aria-labelledby="hero-heading">
-        <h1 id="hero-heading" class="hero__title">Pixel &amp; Growth</h1>
-        <p class="hero__tagline">Build. Connect. Grow.</p>
-        <p class="hero__lead">
-          A digital solutions agency helping small businesses establish and improve
-          their online presence.
-        </p>
-        <a class="btn btn-cta" href="contact.html">Start your project</a>
+      <section class="hero section--dark" aria-labelledby="hero-heading">
+        <div class="hero__inner">
+          <p class="eyebrow">Digital solutions agency</p>
+          <h1 id="hero-heading" class="hero__title">Pixel &amp; Growth</h1>
+          <p class="hero__tagline">Build. Connect. Grow.</p>
+          <p class="hero__lead lead">
+            A digital solutions agency helping small businesses establish and improve
+            their online presence with considered design, honest advice, and
+            solutions that are simple to maintain.
+          </p>
+          <div class="hero__actions">
+            <a class="btn btn-cta" href="contact.html">Start your project</a>
+            <a class="btn btn-cta btn-cta--outline" href="services.html">Explore services</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Approach pillars drawn from the tagline: no claims, just how we work. -->
+      <section class="pillars" aria-labelledby="pillars-heading">
+        <p class="eyebrow">How we help</p>
+        <h2 id="pillars-heading">Three steps to a stronger presence</h2>
+        <ol class="pillars__list">
+          <li class="pillar">
+            <span class="pillar__number">01</span>
+            <h3>Build</h3>
+            <p>Websites and brand foundations designed to look credible and work smoothly on every device.</p>
+          </li>
+          <li class="pillar">
+            <span class="pillar__number">02</span>
+            <h3>Connect</h3>
+            <p>Marketing and social media that put your business in front of the people who need it.</p>
+          </li>
+          <li class="pillar">
+            <span class="pillar__number">03</span>
+            <h3>Grow</h3>
+            <p>Search visibility and practical technology that help your presence improve over time.</p>
+          </li>
+        </ol>
       </section>
 
       <!-- Introduction (Req 3.2): the agency's purpose. -->
-      <section class="intro" aria-labelledby="intro-heading">
-        <h2 id="intro-heading">Helping small businesses grow online</h2>
-        <p>
-          Pixel &amp; Growth partners with small businesses to build a stronger
-          online presence. From a clean, responsive website to practical marketing
-          and search visibility, we help you reach more customers and present your
-          brand with confidence.
-        </p>
-        <p>
-          We focus on clear, honest work: dependable design, straightforward
-          communication, and solutions that are simple to maintain as your business
-          grows.
-        </p>
+      <section class="intro section--alt" aria-labelledby="intro-heading">
+        <div>
+          <p class="eyebrow">About the agency</p>
+          <h2 id="intro-heading">Helping small businesses grow online</h2>
+        </div>
+        <div>
+          <p>
+            Pixel &amp; Growth partners with small businesses to build a stronger
+            online presence. From a clean, responsive website to practical marketing
+            and search visibility, we help you reach more customers and present your
+            brand with confidence.
+          </p>
+          <p>
+            We focus on clear, honest work: dependable design, straightforward
+            communication, and solutions that are simple to maintain as your business
+            grows.
+          </p>
+        </div>
       </section>
 
       <!-- Services overview (Req 3.3, 3.4): five service cards injected by -->
@@ -60,7 +95,10 @@
         aria-labelledby="services-overview-heading"
       >
         <div class="services-overview__header">
-          <h2 id="services-overview-heading">What we do</h2>
+          <div>
+            <p class="eyebrow">Services</p>
+            <h2 id="services-overview-heading">What we do</h2>
+          </div>
           <a class="services-overview__link" href="services.html">View all services</a>
         </div>
         <!-- Populated by js/home.js. The <noscript> fallback links to Services -->
@@ -74,7 +112,8 @@
 
       <!-- Reasons to choose us (Req 3.6): strengths only, NO fabricated -->
       <!-- customer results, metrics, testimonials, or client history. -->
-      <section class="reasons" aria-labelledby="reasons-heading">
+      <section class="reasons section--dark" aria-labelledby="reasons-heading">
+        <p class="eyebrow">Why Pixel &amp; Growth</p>
         <h2 id="reasons-heading">Reasons to choose us</h2>
         <ul class="reasons__list">
           <li class="reasons__item">

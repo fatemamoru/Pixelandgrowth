@@ -24,13 +24,13 @@ Hard constraints honored throughout (from Requirements): do NOT invent a busines
 
 - [ ] 2. Define the shared design-token stylesheet (single styling source)
   - [x] 2.1 Implement `css/tokens.css` as the single source of truth
-    - Declare the brand palette variables (navy `#142C4E`, teal `#20A68A`, white `#FFFFFF`, light grey `#F3F6FA`), semantic color roles, the spacing scale, and breakpoint reference variables
-    - Declare `--font-primary` (Poppins, then Inter fallback) and `--font-body` (Inter)
+    - Declare the brand palette variables (deep navy `#0B1F3A`, warm gold `#C9A24B`, white `#FFFFFF`, ivory `#FAF7F0`, plus supporting shades), semantic color roles, the spacing scale, and breakpoint reference variables
+    - Declare `--font-primary` (Playfair Display, then Inter fallback) and `--font-body` (Inter)
     - Ensure raw hex values and font-family names appear ONLY in this file
     - _Requirements: 2.1, 2.2, 12.4_
 
   - [x] 2.2 Set up self-hosted fonts with graceful fallback
-    - Add `@font-face` rules for self-hosted Poppins and Inter `woff2` in `assets/fonts/`, using `font-display: swap` so Inter renders immediately and Poppins swaps in when loaded
+    - Add `@font-face` rules for self-hosted Playfair Display and Inter `woff2` in `assets/fonts/`, using `font-display: swap` so the fallback renders immediately and Playfair Display swaps in when loaded
     - _Requirements: 2.2, 2.3_
 
   - [x] 2.3 Write property test for brand color contrast
@@ -248,7 +248,7 @@ Hard constraints honored throughout (from Requirements): do NOT invent a busines
 
 - [x] 15. Implement static-analysis audits for brand and stack constraints
   - [x] 15.1 Write CSS and font audit tests
-    - Scan CSS so hex color values appear only in `tokens.css` and all other color usage references variables; assert `@font-face` uses `font-display: swap` and the token font stack lists Poppins then Inter
+    - Scan CSS so hex color values appear only in `tokens.css` and all other color usage references variables; assert `@font-face` uses `font-display: swap` and the token font stack lists Playfair Display then Inter
     - _Requirements: 2.1, 2.2, 2.3, 12.4_
 
   - [x] 15.2 Write shared-component degradation test

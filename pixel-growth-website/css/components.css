@@ -1,34 +1,30 @@
-/* css/components.css — nav, footer, cards, buttons, form styles
+/* css/components.css — navigation, hero, sections, cards, buttons, forms, footer
  *
- * Component-level styling for the Pixel & Growth site. These rules style the
- * exact classes produced by the shared component definition (js/components.js)
- * and the pure render helpers (js/render.js), plus the Contact_Form fields and
- * the graceful-degradation notices.
+ * Component-level styling for Pixel & Growth. Styles the classes emitted by
+ * js/components.js and js/render.js, plus the page layouts in the HTML files.
  *
- * Scope of THIS task (9.2): base + desktop component appearance only. The
- * actual mobile show/hide media queries (hiding .nav-links behind .nav-toggle
- * below 768px, re-showing at >=768px) are task 12.1. Here the base styles make
- * the desktop layout correct and expose the component appearance; .nav-toggle
- * is hidden by default (shown on mobile in 12.1).
+ * Mobile-first: base rules target the smallest viewport, min-width media
+ * queries enhance at tablet (768px) and desktop (1024px). Media query values
+ * mirror --bp-tablet / --bp-desktop (CSS cannot read var() in media queries).
  *
- * CONSISTENCY (Req 2.6): buttons, headings, and spacing are defined once here
- * (headings live in base.css) and reused on every page so styling is identical
- * across all five pages. Cards, nav, footer, and form controls all draw from
- * the shared spacing scale.
- *
- * TOKENS ONLY (Req 12.4): this file references ONLY custom properties from
- * tokens.css. No raw hex color values and no font-family name literals appear
- * here. tokens.css (and base.css) must be linked before this file so the
- * variables resolve.
+ * TOKENS ONLY (Req 12.4): no raw hex values and no font-family literals here.
  */
 
 /* ===========================================================================
- * Navigation (site-nav) — Req 1.9, 1.10, 2.4, 8.2
- *
- * Horizontal logo (icon left, name right), a horizontal list of five links,
- * exactly one active-state indicator, and a mobile toggle button (hidden on
- * desktop; shown + wired at the mobile breakpoint in task 12.1).
+ * Navigation (Req 1.9, 1.10, 2.4, 8.2)
+ * Sticky deep-navy bar. Horizontal logo, five links, one gold active
+ * indicator, and a mobile toggle that collapses the links below 768px.
  * =========================================================================== */
+
+header[data-component="site-nav"] {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: color-mix(in srgb, var(--color-navy) 94%, transparent);
+  -webkit-backdrop-filter: saturate(140%) blur(10px);
+  backdrop-filter: saturate(140%) blur(10px);
+  border-bottom: 1px solid var(--color-line-inverse);
+}
 
 .site-nav {
   display: flex;
@@ -37,20 +33,16 @@
   flex-wrap: wrap;
   gap: var(--space-3);
   width: 100%;
-  max-width: var(--bp-desktop);
-  margin-inline: auto;
-  padding: var(--space-3);
-  background: var(--color-bg);
-  border-bottom: 1px solid var(--color-surface);
+  padding-block: var(--space-3);
+  padding-inline: max(var(--space-4), calc((100% - var(--container-max)) / 2));
 }
 
-/* Horizontal logo: icon on the LEFT, business name on the RIGHT (Req 2.4). */
 .site-nav__logo {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
   text-decoration: none;
-  color: var(--color-text);
+  color: var(--color-text-inverse);
 }
 
 .site-nav__logo:hover {
@@ -59,49 +51,56 @@
 
 .site-nav__logo-icon {
   display: block;
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   flex: 0 0 auto;
 }
 
 .site-nav__logo-name {
   font-family: var(--font-primary);
   font-weight: 700;
-  font-size: 1.25rem;
+  font-size: 1.375rem;
+  letter-spacing: -0.01em;
   line-height: 1;
-  color: var(--color-text);
+  color: var(--color-text-inverse);
 }
 
-/* Mobile collapsible toggle (Req 8.2). Hidden on desktop by default; the
- * media queries in task 12.1 reveal it below 768px and wire its behavior. */
+/* Mobile toggle: visible on mobile (Req 8.2), hidden from 768px up. */
 .nav-toggle {
-  display: none;
+  display: inline-flex;
   align-items: center;
   gap: var(--space-2);
   padding: var(--space-2) var(--space-3);
   background: transparent;
-  color: var(--color-text);
-  border: 1px solid var(--color-text);
-  border-radius: var(--space-1);
+  color: var(--color-text-inverse);
+  border: 1px solid var(--color-line-inverse);
+  border-radius: var(--radius-sm);
   cursor: pointer;
-  font-family: var(--font-primary);
   font-weight: 600;
+  letter-spacing: 0.04em;
 }
 
 .nav-toggle:hover {
-  background: var(--color-surface);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
 }
 
-/* Horizontal link list (Req 1.3). On desktop the links sit inline; the mobile
- * collapse is applied in task 12.1. */
+/* Link list: hidden behind the toggle on mobile; revealed with `is-open`. */
 .nav-links {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: var(--space-4);
+  display: none;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1);
+  width: 100%;
+  flex-basis: 100%;
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: var(--space-2) 0 var(--space-3);
+  border-top: 1px solid var(--color-line-inverse);
+}
+
+.nav-links.is-open {
+  display: flex;
 }
 
 .nav-item {
@@ -111,12 +110,13 @@
 .nav-link {
   display: inline-block;
   padding: var(--space-2) 0;
-  font-family: var(--font-primary);
-  font-weight: 600;
-  color: var(--color-text);
+  font-weight: 500;
+  font-size: 0.9375rem;
+  letter-spacing: 0.02em;
+  color: color-mix(in srgb, var(--color-white) 84%, transparent);
   text-decoration: none;
-  /* Reserve the active-indicator space so switching pages never shifts text. */
-  border-bottom: 3px solid transparent;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
 }
 
 .nav-link:hover {
@@ -124,149 +124,401 @@
   text-decoration: none;
 }
 
-/* Active-state indicator: exactly one link per page (Req 1.6). A teal
- * underline + accent text clearly marks the current page. */
+/* Exactly one active link per page (Req 1.6): gold text + gold underline. */
 .nav-link.is-active {
   color: var(--color-accent);
   border-bottom-color: var(--color-accent);
 }
 
 /* ===========================================================================
- * Footer (site-footer) — Req 1.8
- *
- * Business name, tagline, and links to all five pages, on the navy brand
- * surface with inverse (white) text for contrast.
- * =========================================================================== */
-
-footer[data-component="site-footer"] {
-  background: var(--color-navy);
-  color: var(--color-text-inverse);
-}
-
-.site-footer__inner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-2);
-  width: 100%;
-  max-width: var(--bp-desktop);
-  margin-inline: auto;
-  padding: var(--space-5) var(--space-3);
-  text-align: center;
-}
-
-.site-footer__brand {
-  margin: 0;
-  font-family: var(--font-primary);
-  font-weight: 700;
-  font-size: 1.25rem;
-  color: var(--color-text-inverse);
-}
-
-.site-footer__tagline {
-  margin: 0 0 var(--space-3);
-  color: var(--color-text-inverse);
-}
-
-.footer-links {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--space-4);
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.footer-item {
-  margin: 0;
-}
-
-.footer-link {
-  color: var(--color-text-inverse);
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.footer-link:hover {
-  color: var(--color-accent);
-  text-decoration: underline;
-}
-
-/* ===========================================================================
- * Button (single shared style) — Req 2.6
- *
- * One `.btn` base plus the `.btn-cta` variant used by renderButton() for every
- * call-to-action, so button styling is identical on every page. Accent
- * background, on-accent (white) text, consistent padding and radius, and a
- * clear hover state.
+ * Buttons: one shared style (Req 2.6)
+ * Primary: gold with navy text. Outline variant for secondary actions.
  * =========================================================================== */
 
 .btn {
   display: inline-block;
-  padding: var(--space-3) var(--space-5);
-  font-family: var(--font-primary);
+  padding: 0.9rem var(--space-5);
+  font-family: var(--font-body);
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 0.9375rem;
+  letter-spacing: 0.04em;
   line-height: 1.2;
   text-align: center;
   text-decoration: none;
   border: 2px solid transparent;
-  border-radius: var(--space-1);
+  border-radius: var(--radius-sm);
   cursor: pointer;
-  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  transition: background-color 0.18s ease, color 0.18s ease,
+    border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
 }
 
 .btn:hover {
   text-decoration: none;
+  transform: translateY(-1px);
 }
 
 .btn-cta {
   background: var(--color-accent);
   color: var(--color-on-accent);
   border-color: var(--color-accent);
+  box-shadow: var(--shadow-sm);
 }
 
 .btn-cta:hover,
 .btn-cta:focus-visible {
-  /* Invert on hover: accent outline with accent text on the base surface,
-   * keeping contrast on-brand without introducing a new color. */
-  background: var(--color-bg);
+  background: var(--color-navy);
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+  box-shadow: var(--shadow-md);
+}
+
+/* On dark surfaces the hover state inverts to white so it stays visible. */
+.section--dark .btn-cta:hover,
+.section--dark .btn-cta:focus-visible {
+  background: var(--color-white);
+  color: var(--color-navy);
+  border-color: var(--color-white);
+}
+
+/* Secondary action: outlined, no fill */
+.btn-cta--outline {
+  background: transparent;
+  color: var(--color-text-inverse);
+  border-color: var(--color-line-inverse);
+  box-shadow: none;
+}
+
+.btn-cta--outline:hover,
+.btn-cta--outline:focus-visible {
+  background: transparent;
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.section--dark .btn-cta--outline:hover,
+.section--dark .btn-cta--outline:focus-visible {
+  background: transparent;
   color: var(--color-accent);
   border-color: var(--color-accent);
 }
 
 /* ===========================================================================
- * Service card — Req 3.3, 5.2, 5.3
- *
- * Surface background, padding, and radius. Used for the Home services overview
- * and the Services page list.
+ * Hero (Home) and page headers (inner pages)
  * =========================================================================== */
 
+.hero,
+.page-hero {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(60% 90% at 88% 0%, color-mix(in srgb, var(--color-gold) 24%, transparent), transparent 62%),
+    linear-gradient(160deg, var(--color-navy) 0%, var(--color-navy-soft) 100%);
+}
+
+/* Fine pixel-grid motif, fading toward the lower left. */
+.hero::before,
+.page-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(var(--color-line-inverse) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-line-inverse) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: radial-gradient(70% 100% at 92% 0%, black 0%, transparent 72%);
+  mask-image: radial-gradient(70% 100% at 92% 0%, black 0%, transparent 72%);
+  opacity: 0.7;
+}
+
+main > .hero {
+  padding-block: clamp(var(--space-7), 14vw, var(--space-8)) clamp(var(--space-7), 12vw, 7.5rem);
+}
+
+main > .page-hero {
+  padding-block: var(--space-7) var(--space-6);
+}
+
+.hero__inner {
+  max-width: 780px;
+  animation: rise 0.8s ease both;
+}
+
+.hero__title {
+  margin-bottom: var(--space-2);
+  font-size: clamp(2.25rem, 6vw, 4rem);
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+}
+
+.hero__tagline {
+  margin-bottom: var(--space-4);
+  font-family: var(--font-primary);
+  font-style: italic;
+  font-weight: 700;
+  font-size: clamp(1.125rem, 2.4vw, 1.625rem);
+  color: var(--color-accent);
+}
+
+.hero__lead {
+  max-width: 54ch;
+  margin-bottom: var(--space-5);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.page-hero .page-title,
+.page-hero .page__title {
+  max-width: 18ch;
+  margin-bottom: var(--space-3);
+  font-size: clamp(2rem, 4.6vw, 3rem);
+}
+
+.page-hero .page-lead {
+  max-width: 56ch;
+  margin-bottom: 0;
+  font-size: 1.1875rem;
+  color: color-mix(in srgb, var(--color-white) 82%, transparent);
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===========================================================================
+ * Home: pillars, intro, reasons, call to action
+ * =========================================================================== */
+
+.pillars__list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-5);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pillar {
+  padding-top: var(--space-4);
+  border-top: 2px solid var(--color-accent);
+}
+
+.pillar__number {
+  display: block;
+  margin-bottom: var(--space-2);
+  font-family: var(--font-primary);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  letter-spacing: 0.12em;
+  color: var(--color-accent-text);
+}
+
+.pillar h3 {
+  font-size: clamp(1.375rem, 2.4vw, 1.75rem);
+  margin-bottom: var(--space-2);
+}
+
+.pillar p {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+}
+
+.intro p {
+  color: var(--color-text-muted);
+  font-size: 1.0625rem;
+}
+
+.services-overview__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.services-overview__header h2 {
+  margin-bottom: 0;
+}
+
+.services-overview__link {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.reasons__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+  gap: var(--space-5) var(--space-4);
+  list-style: none;
+  padding: 0;
+  margin: var(--space-5) 0 0;
+}
+
+.reasons__item {
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-accent);
+}
+
+.reasons__item h3 {
+  color: var(--color-text-inverse);
+  font-size: 1.0625rem;
+}
+
+.reasons__item p {
+  margin: 0;
+  color: color-mix(in srgb, var(--color-white) 78%, transparent);
+}
+
+/* Call to action band: warm gold with navy text */
+main > .contact-cta,
+main > .services-cta {
+  text-align: center;
+  background:
+    radial-gradient(70% 120% at 50% 0%, color-mix(in srgb, var(--color-white) 28%, transparent), transparent 70%),
+    var(--color-accent);
+  color: var(--color-navy);
+}
+
+.contact-cta h2,
+.services-cta h2 {
+  max-width: 20ch;
+  margin-inline: auto;
+}
+
+.contact-cta p,
+.services-cta p {
+  max-width: 52ch;
+  margin-inline: auto;
+  margin-bottom: var(--space-4);
+  color: var(--color-navy);
+}
+
+.contact-cta .btn-cta,
+.services-cta .btn-cta {
+  background: var(--color-navy);
+  color: var(--color-text-inverse);
+  border-color: var(--color-navy);
+}
+
+.contact-cta .btn-cta:hover,
+.contact-cta .btn-cta:focus-visible,
+.services-cta .btn-cta:hover,
+.services-cta .btn-cta:focus-visible {
+  background: transparent;
+  color: var(--color-navy);
+  border-color: var(--color-navy);
+}
+
+/* ===========================================================================
+ * Card grids (mobile base: single column; Req 8.5)
+ * minmax(0, 1fr) keeps content from widening a track past the viewport (8.3).
+ * =========================================================================== */
+
+.service-card-grid,
+.services-list,
+#portfolio-list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+  width: 100%;
+  counter-reset: svc;
+}
+
+/* Service card (Req 3.3, 5.2, 5.3) */
+.service-card-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  height: 100%;
+}
+
+.service-card-link:hover {
+  text-decoration: none;
+}
+
 .service-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
-  padding: var(--space-4);
-  background: var(--color-surface);
-  border-radius: var(--space-2);
+  height: 100%;
+  padding: var(--space-5) var(--space-4) var(--space-4);
+  background: var(--color-white);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  counter-increment: svc;
+  overflow: hidden;
+}
+
+.service-card::before {
+  content: "0" counter(svc);
+  font-family: var(--font-primary);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  letter-spacing: 0.12em;
+  color: var(--color-accent-text);
+}
+
+.service-card::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+}
+
+.service-card-link:hover .service-card,
+.service-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: transparent;
+}
+
+.service-card-link:hover .service-card::after,
+.service-card:hover::after {
+  transform: scaleX(1);
 }
 
 .service-card__title {
   margin: 0;
-  color: var(--color-text);
+  font-size: 1.125rem;
 }
 
 .service-card__description {
   margin: 0;
-  color: var(--color-text);
+  color: var(--color-text-muted);
+}
+
+/* Notice shown when a service entry fails to load (Req 5.5) */
+.services-unavailable {
+  grid-column: 1 / -1;
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface-alt);
+  border-left: 4px solid var(--color-accent);
+  border-radius: var(--radius-sm);
 }
 
 /* ===========================================================================
- * Portfolio card — Req 6.2, 6.5
- *
- * Card surface with a prominent, non-interactive "Sample / Demonstration"
- * badge so every demonstration project is clearly flagged as illustrative.
+ * Portfolio card (Req 6.2, 6.5)
+ * Image on top, persistent non-interactive "Sample / Demonstration" badge.
  * =========================================================================== */
 
 .portfolio-card {
@@ -274,122 +526,230 @@ footer[data-component="site-footer"] {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
-  padding: var(--space-4);
-  background: var(--color-surface);
-  border-radius: var(--space-2);
+  background: var(--color-white);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
   overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Prominent demonstration badge (Req 6.2). Accent background, on-accent text,
- * pinned to the top-left corner of the card; non-interactive (it's a <span>). */
+.portfolio-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
 .portfolio-card__label {
   position: absolute;
   top: var(--space-3);
   left: var(--space-3);
   z-index: 1;
   display: inline-block;
-  padding: var(--space-1) var(--space-2);
+  padding: var(--space-1) var(--space-3);
   background: var(--color-accent);
   color: var(--color-on-accent);
-  font-family: var(--font-primary);
-  font-weight: 700;
-  font-size: 0.75rem;
-  letter-spacing: 0.04em;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  border-radius: var(--space-1);
+  border-radius: 999px;
+  box-shadow: var(--shadow-sm);
 }
 
 .portfolio-card__image {
   width: 100%;
   height: auto;
-  border-radius: var(--space-1);
+  background: var(--color-surface-alt);
 }
 
 .portfolio-card__title {
-  margin: 0;
-  color: var(--color-text);
+  margin: var(--space-2) 0 0;
+  padding-inline: var(--space-4);
+  font-size: 1.0625rem;
 }
 
 .portfolio-card__description {
   margin: 0;
-  color: var(--color-text);
+  padding-inline: var(--space-4);
+  padding-bottom: var(--space-4);
+  color: var(--color-text-muted);
+  font-size: 0.9375rem;
 }
 
-/* Empty-state message when no valid demonstration projects are available
- * (Req 6.6); keeps the page layout rather than leaving it blank. */
+.portfolio-intro {
+  max-width: 62ch;
+  margin-bottom: var(--space-5);
+  color: var(--color-text-muted);
+}
+
+.page-hero .portfolio-intro {
+  max-width: 56ch;
+  margin-bottom: 0;
+  font-size: 1.125rem;
+  color: color-mix(in srgb, var(--color-white) 82%, transparent);
+}
+
 .portfolio-empty {
-  padding: var(--space-5) var(--space-3);
+  padding: var(--space-6) var(--space-4);
   text-align: center;
-  color: var(--color-text);
+  color: var(--color-text-muted);
   background: var(--color-surface);
-  border-radius: var(--space-2);
+  border: 1px dashed var(--color-line);
+  border-radius: var(--radius-md);
 }
 
 /* ===========================================================================
- * Contact form — Req 7.1–7.5, 9.2
- *
- * Labeled fields (label bound to each control), consistent control styling for
- * inputs/textarea/select, and inline, field-specific validation messages. The
- * exact markup is assembled in task 10.5; these styles target the conventional
- * field wrapper (.form-field), the control classes, and the .field-error
- * validation message the contact page emits.
+ * About: values and approach (Req 4.3, 4.4)
  * =========================================================================== */
+
+.values-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: var(--space-4);
+  list-style: none;
+  padding: 0;
+  margin: var(--space-5) 0 0;
+}
+
+.value-card {
+  padding: var(--space-4);
+  background: var(--color-white);
+  border: 1px solid var(--color-line);
+  border-left: 3px solid var(--color-accent);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.value-card__title {
+  margin-bottom: var(--space-2);
+}
+
+.value-card__desc {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.approach-steps {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-5) 0 0;
+  counter-reset: step;
+}
+
+.approach-step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 3.5rem minmax(0, 1fr);
+  column-gap: var(--space-3);
+  padding: var(--space-4) 0;
+  border-top: 1px solid var(--color-line);
+  counter-increment: step;
+}
+
+.approach-step:last-child {
+  border-bottom: 1px solid var(--color-line);
+}
+
+.approach-step::before {
+  content: "0" counter(step);
+  grid-row: 1 / span 2;
+  font-family: var(--font-primary);
+  font-weight: 600;
+  font-size: 1.75rem;
+  line-height: 1.2;
+  color: var(--color-accent-text);
+}
+
+.approach-step__title {
+  margin-bottom: var(--space-1);
+}
+
+.approach-step__desc {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.about-mission p {
+  font-family: var(--font-primary);
+  font-size: clamp(1.375rem, 2.6vw, 1.875rem);
+  line-height: 1.45;
+  max-width: 34ch;
+  color: var(--color-text-inverse);
+}
+
+.section-unavailable {
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface-alt);
+  border-left: 4px solid var(--color-accent);
+  border-radius: var(--radius-sm);
+}
+
+/* ===========================================================================
+ * Contact form (Req 7.1-7.5, 9.2)
+ * =========================================================================== */
+
+.contact-section {
+  background: var(--color-surface);
+}
 
 .contact-form {
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
   width: 100%;
-  max-width: 560px;
+  max-width: 680px;
+  padding: var(--space-5) var(--space-4);
+  background: var(--color-white);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
 }
 
-/* One labeled field: label stacked above its control. */
 .form-field {
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
 }
 
-.form-field__label,
 .contact-form label {
-  font-family: var(--font-primary);
   font-weight: 600;
+  font-size: 0.875rem;
+  letter-spacing: 0.02em;
   color: var(--color-text);
 }
 
-/* Shared control appearance for text inputs, textarea, and select. */
 .contact-form input,
 .contact-form textarea,
 .contact-form select {
   width: 100%;
-  padding: var(--space-2) var(--space-3);
+  padding: 0.8rem var(--space-3);
   color: var(--color-text);
-  background: var(--color-bg);
-  border: 1px solid var(--color-navy);
-  border-radius: var(--space-1);
+  background: var(--color-white);
+  border: 1px solid var(--color-slate);
+  border-radius: var(--radius-sm);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .contact-form textarea {
-  min-height: calc(var(--space-6) + var(--space-5));
+  min-height: 9rem;
   resize: vertical;
 }
 
 .contact-form input:focus,
 .contact-form textarea:focus,
 .contact-form select:focus {
-  outline: 3px solid var(--color-accent);
+  outline: 3px solid var(--color-accent-text);
   outline-offset: 2px;
-  border-color: var(--color-accent);
+  border-color: var(--color-accent-text);
 }
 
-/* Inline, field-specific validation message (Req 7.3, 7.4, 7.5). Uses the
- * on-brand navy for the message text and a navy accent bar so no new raw color
- * is introduced; invalid controls get an accent border to draw the eye. */
 .field-error {
   margin: 0;
-  padding: var(--space-1) 0 0;
+  min-height: 0;
+  font-size: 0.875rem;
   font-weight: 600;
-  color: var(--color-navy);
+  color: var(--color-error);
 }
 
 .form-field.is-invalid input,
@@ -398,43 +758,109 @@ footer[data-component="site-footer"] {
 .contact-form input[aria-invalid="true"],
 .contact-form textarea[aria-invalid="true"],
 .contact-form select[aria-invalid="true"] {
-  border-color: var(--color-accent);
+  border-color: var(--color-error);
   border-width: 2px;
 }
 
-/* The not-yet-connected placeholder confirmation (Req 7.6). Styled as an
- * on-surface notice so it reads as informational, never a success/delivery
- * claim. */
+.contact-form .btn-cta {
+  align-self: flex-start;
+}
+
+/* Not-yet-connected placeholder confirmation (Req 7.6): informational only. */
 .form-result {
   margin: 0;
   padding: var(--space-3) var(--space-4);
   color: var(--color-text);
   background: var(--color-surface);
   border-left: 4px solid var(--color-accent);
-  border-radius: var(--space-1);
+  border-radius: var(--radius-sm);
+}
+
+.form-result:empty {
+  display: none;
 }
 
 /* ===========================================================================
- * Graceful-degradation notices — Req 12.5
- *
- * Visible indications when a shared element is unavailable, and the
- * <noscript> fallback navigation surfaced when JavaScript does not run.
+ * Footer (Req 1.8)
  * =========================================================================== */
 
-/* "Shared element unavailable" indication written by mountSharedComponents()
- * when a reusable component fails to inject. Kept visible and on-surface so the
- * failure is obvious while the rest of the page still renders. */
+footer[data-component="site-footer"] {
+  background: var(--color-navy);
+  color: var(--color-text-inverse);
+  border-top: 3px solid var(--color-accent);
+}
+
+.site-footer__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-6) var(--space-4);
+  text-align: center;
+}
+
+.site-footer__brand {
+  margin: 0;
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: 1.75rem;
+  letter-spacing: -0.01em;
+  color: var(--color-text-inverse);
+}
+
+.site-footer__tagline {
+  margin: 0 0 var(--space-3);
+  font-family: var(--font-primary);
+  font-style: italic;
+  font-weight: 700;
+  color: var(--color-accent);
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2) var(--space-4);
+  list-style: none;
+  margin: 0;
+  padding: var(--space-3) 0 0;
+  border-top: 1px solid var(--color-line-inverse);
+}
+
+.footer-item {
+  margin: 0;
+}
+
+.footer-link {
+  color: color-mix(in srgb, var(--color-white) 82%, transparent);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9375rem;
+}
+
+.footer-link:hover {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+
+/* ===========================================================================
+ * Graceful-degradation notices (Req 12.5)
+ * =========================================================================== */
+
 .shared-unavailable {
   margin: 0;
   padding: var(--space-3);
   text-align: center;
   color: var(--color-text);
-  background: var(--color-surface);
+  background: var(--color-surface-alt);
 }
 
-/* No-JavaScript fallback nav list (embedded in each landmark as <noscript>
- * content). Laid out as a simple horizontal list so navigation still works
- * when JS is disabled or fails to load. */
+header[data-component="site-nav"] .shared-unavailable {
+  color: var(--color-text-inverse);
+  background: transparent;
+}
+
 .noscript-nav {
   display: flex;
   flex-wrap: wrap;
@@ -451,81 +877,12 @@ footer[data-component="site-footer"] {
 }
 
 /* ===========================================================================
- * Responsive layout & mobile menu behavior (task 12.1)
- * Req 8.1, 8.2, 8.3, 8.4, 8.5, 4.7
- *
- * Mobile-first strategy: the BASE rules below (no media query) target the
- * smallest supported Breakpoint (mobile, 320–767px). `min-width` media queries
- * then progressively enhance the layout at the tablet (>=768px) and desktop
- * (>=1024px) Breakpoints. These literal pixel values mirror the token
- * references --bp-tablet (768px) and --bp-desktop (1024px) in tokens.css; CSS
- * media query conditions cannot read var(), so the numbers are inlined here but
- * kept in lock-step with those tokens.
- *
- * NO HORIZONTAL SCROLL (Req 8.3): fluid, percentage/relative-width containers
- * plus `max-width: 100%` media (set in base.css) keep every layout inside the
- * viewport at all widths. All sizing uses relative/token units — no fixed px
- * widths that could force overflow.
- *
- * TOKENS ONLY (Req 12.4): no raw hex or font-family literals below.
+ * Responsive layout (Req 8.1-8.5, 4.7)
+ * Mobile base above; progressive enhancement from 768px and 1024px.
  * =========================================================================== */
 
-/* ---------------------------------------------------------------------------
- * MOBILE BASE (320–767px) — nav collapses behind the toggle
- *
- * Below the tablet Breakpoint the five nav links are hidden by default and the
- * toggle button is shown (Req 8.2). The links are revealed only when
- * components.js adds the `is-open` class to the <ul class="nav-links"> (wired
- * in js/components.js): the toggle flips aria-expanded and toggles is-open.
- * ------------------------------------------------------------------------- */
-
-/* Show the hamburger/menu toggle on mobile (Req 8.2). */
-.nav-toggle {
-  display: inline-flex;
-}
-
-/* Hide the link list by default on mobile; it sits behind the toggle. */
-.nav-links {
-  display: none;
-  /* When shown on mobile the links stack vertically and span the full nav
-   * width, below the logo + toggle row. */
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--space-2);
-  width: 100%;
-  flex-basis: 100%;
-}
-
-/* Revealed when the toggle is activated (components.js adds `is-open`). */
-.nav-links.is-open {
-  display: flex;
-}
-
-/* ---------------------------------------------------------------------------
- * Fluid card grids — mobile base: single column (Req 8.5)
- *
- * The three card containers (Home services overview, Services page list, and
- * the Portfolio list) are CSS grids. On mobile they are a single column so
- * cards stack full-width; tablet/desktop media queries below add columns.
- * `minmax(0, 1fr)` columns prevent intrinsic content (long words, images) from
- * widening a track past the viewport (Req 8.3).
- * ------------------------------------------------------------------------- */
-
-.service-card-grid,
-.services-list,
-#portfolio-list {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: var(--space-4);
-  width: 100%;
-}
-
-/* ---------------------------------------------------------------------------
- * TABLET (>=768px) — re-show the nav links, hide the toggle, 2-column grids
- * ------------------------------------------------------------------------- */
-
+/* TABLET (>=768px): links return inline, toggle hides, 2-column grids */
 @media (min-width: 768px) {
-  /* Nav links return to a horizontal inline row (Req 8.2). */
   .nav-links {
     display: flex;
     flex-direction: row;
@@ -534,28 +891,37 @@ footer[data-component="site-footer"] {
     gap: var(--space-4);
     width: auto;
     flex-basis: auto;
+    padding: 0;
+    border-top: 0;
   }
 
-  /* The toggle is only for the collapsed mobile menu; hide it at >=768px. */
   .nav-toggle {
     display: none;
   }
 
-  /* Two-column card grids on tablet. */
   .service-card-grid,
   .services-list,
   #portfolio-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .pillars__list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .intro {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--space-6);
+    align-items: start;
+  }
+
+  .contact-form {
+    padding: var(--space-6) var(--space-5);
+  }
 }
 
-/* ---------------------------------------------------------------------------
- * DESKTOP (>=1024px) — wider card grids
- * ------------------------------------------------------------------------- */
-
+/* DESKTOP (>=1024px): 3-column grids */
 @media (min-width: 1024px) {
-  /* Three-column card grids give the services/portfolio listings a full
-   * multi-column layout on desktop (Req 8.5). */
   .service-card-grid,
   .services-list,
   #portfolio-list {

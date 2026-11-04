@@ -76,7 +76,7 @@ This gives a true single source of truth for nav and footer (Req 12.2, 12.3) wit
 | Styling | CSS3 with **custom properties (CSS variables)** | Brand palette and fonts defined once as variables in `tokens.css`; a single edit propagates everywhere | 2.1, 2.2, 12.4 |
 | Layout | CSS Flexbox + Grid, media queries | Standard, well-documented, beginner-approachable responsive primitives | 8.1–8.5 |
 | Behavior | Vanilla JavaScript (ES modules) | No framework/toolchain; component injection, form validation, and data rendering in plain JS | 12.1, 12.6 |
-| Fonts | Poppins (primary) + Inter (fallback), self-hosted `woff2` | Self-hosting avoids a third-party dependency and gives control over the font-loading fallback | 2.2, 2.3 |
+| Fonts | Playfair Display (primary, headings) + Inter (body/fallback), self-hosted `woff2` | Self-hosting avoids a third-party dependency and gives control over the font-loading fallback | 2.2, 2.3 |
 | Images | WebP/AVIF with `<picture>` + native lazy loading | Web-optimized formats and `loading="lazy"` need no tooling | 11.1, 11.2 |
 | Local serving | No-cost static server (e.g., `python -m http.server`, VS Code Live Server) | Enables ES modules locally at zero cost | 12.6 |
 
@@ -107,7 +107,7 @@ pixel-growth-website/
 │   ├── portfolio-page.js   # renders portfolio cards on portfolio.html
 │   └── contact.js          # wires validation + placeholder submit on contact.html
 ├── assets/
-│   ├── fonts/              # self-hosted Poppins + Inter woff2
+│   ├── fonts/              # self-hosted Playfair Display + Inter woff2
 │   ├── logo/               # horizontal logo (icon left, name right)
 │   └── img/                # WebP/AVIF demonstration images + placeholder
 └── tests/                  # test files (see Testing Strategy)
@@ -199,25 +199,41 @@ A single file, `css/tokens.css`, is the one shared styling location (Req 12.4). 
 ```css
 /* css/tokens.css — single source of truth */
 :root {
-  /* Brand palette (Req 2.1) */
-  --color-navy:       #142C4E;
-  --color-teal:       #20A68A;
-  --color-white:      #FFFFFF;
-  --color-grey-light: #F3F6FA;
+  /* Brand palette (Req 2.1): deep navy + warm gold */
+  --color-navy:        #0B1F3A;  /* primary dark surface + text */
+  --color-navy-soft:   #14305A;  /* lifted navy: gradients, dark cards */
+  --color-gold:        #C9A24B;  /* accent on dark, buttons */
+  --color-gold-deep:   #7A5F1E;  /* accent TEXT on light surfaces */
+  --color-white:       #FFFFFF;
+  --color-ivory:       #FAF7F0;  /* warm off-white surface */
+  --color-sand:        #F1ECE0;  /* alternate surface */
+  --color-slate:       #4B5A70;  /* muted body text on light surfaces */
+  --color-error:       #9B1C1C;  /* form validation messages */
 
-  /* Semantic roles mapped to palette (keeps usage on-brand) */
-  --color-text:       var(--color-navy);
-  --color-bg:         var(--color-white);
-  --color-surface:    var(--color-grey-light);
-  --color-accent:     var(--color-teal);
+  /* Semantic roles mapped to the palette (keeps usage on-brand) */
+  --color-text:        var(--color-navy);
+  --color-text-muted:  var(--color-slate);
+  --color-bg:          var(--color-white);
+  --color-surface:     var(--color-ivory);
+  --color-surface-alt: var(--color-sand);
+  --color-accent:      var(--color-gold);
+  --color-accent-text: var(--color-gold-deep);
+  --color-text-inverse: var(--color-white);
+  --color-on-accent:    var(--color-navy);  /* navy on gold */
 
-  /* Fonts (Req 2.2): Poppins primary, Inter fallback */
-  --font-primary: 'Poppins', 'Inter', system-ui, sans-serif;
+  /* Fonts (Req 2.2): Playfair Display primary, Inter fallback/body */
+  --font-primary: 'Playfair Display', 'Inter', Georgia, serif;
   --font-body:    'Inter', system-ui, sans-serif;
 
   /* Spacing scale (enables matching spacing across pages, Req 2.6) */
   --space-1: 4px;  --space-2: 8px;  --space-3: 16px;
   --space-4: 24px; --space-5: 40px; --space-6: 64px;
+  --space-7: 96px; --space-8: 128px;
+
+  /* Shape, elevation, and layout */
+  --radius-sm: 6px;  --radius-md: 12px;  --radius-lg: 20px;
+  --shadow-sm / --shadow-md / --shadow-lg  /* navy-tinted shadows */
+  --container-max: 1120px;
 
   /* Breakpoints documented as reference (Req 8.1) */
   --bp-tablet: 768px;
@@ -227,9 +243,11 @@ A single file, `css/tokens.css`, is the one shared styling location (Req 12.4). 
 
 **Palette enforcement (Req 2.1):** all color declarations use the `--color-*` variables; a lint/test step (see Testing Strategy) scans CSS for stray hex codes outside `tokens.css`.
 
-**Font loading and fallback (Req 2.2, 2.3):** fonts are declared with `@font-face` using `font-display: swap`, so if Poppins has not loaded the browser immediately renders Inter (the secondary font) and swaps when ready — satisfying the "fall back within 3 seconds" intent without custom timers.
+**Font loading and fallback (Req 2.2, 2.3):** fonts are declared with `@font-face` using `font-display: swap`, so if Playfair Display has not loaded the browser immediately renders the fallback (Inter / Georgia) and swaps when ready — satisfying the "fall back within 3 seconds" intent without custom timers.
 
 **Consistency (Req 2.6):** headings, buttons, and spacing are defined once as classes in `base.css`/`components.css` and reused, giving identical styles across all pages.
+
+**Visual direction and layout (Req 2.1, 2.6, 8.1):** the identity is deep navy with warm gold accents. Headings use the Playfair Display serif for an editorial, premium tone; body copy uses Inter. The heading scale is defined once in `base.css` using fluid `clamp()` sizes (h1 up to 52px, h2 up to 34px, h3 18px). Pages are built from full-bleed section bands: `main > section` centres its content in a column no wider than `--container-max` using a responsive inline-padding gutter, and sections alternate surfaces through the `section--dark`, `section--alt`, and `section--sand` modifiers. Shared patterns: a sticky navy navigation bar with a gold active-link indicator; a dark Home hero with a gold italic tagline, a primary gold button, and an outlined secondary button (`btn-cta--outline`); a dark page header (`page-hero`) opening every inner page; numbered service cards and process steps rendered with CSS counters; and a gold call-to-action band before the navy footer.
 
 ## Responsive Strategy
 
@@ -244,7 +262,7 @@ A single file, `css/tokens.css`, is the one shared styling location (Req 12.4). 
 - **Image alt text (Req 9.1):** informational images carry descriptive `alt`; decorative images use `alt=""` (and/or `role="presentation"`) so assistive tech ignores them.
 - **Labeled form fields (Req 9.2):** every Contact_Form control has a visible `<label>` bound via `for`/`id`.
 - **Semantic landmarks (Req 9.3):** each page uses `<header>`, `<nav>`, `<main>`, `<footer>`; the injected nav/footer preserve these landmark elements.
-- **Contrast (Req 9.4):** navy text on white/light-grey and white text on navy/teal are chosen to meet ≥4.5:1 for body text and ≥3:1 for large text; combinations are verified in the Testing Strategy.
+- **Contrast (Req 9.4):** navy text on white/ivory/sand, slate muted text on white/ivory, deep-gold accent text on white/ivory, white text on navy, gold text on navy, and navy text on gold (buttons and the call-to-action band) are chosen to meet ≥4.5:1 for body text; combinations are verified in the Testing Strategy (Property 13).
 - **Keyboard navigation + visible focus (Req 9.5):** logical DOM order gives a natural tab order; a visible `:focus-visible` outline (not removed) is defined in tokens/base; the mobile menu toggle and all form controls are keyboard operable.
 
 ## SEO Strategy
@@ -431,7 +449,7 @@ Each correctness property maps to a **single** property-based test configured fo
 ### Audit / static-analysis tests
 
 - CSS scan: hex color values appear only in `tokens.css`; all other color usage references variables (2.1, 12.4).
-- `@font-face` uses `font-display: swap`; token font stack lists Poppins then Inter (2.2, 2.3).
+- `@font-face` uses `font-display: swap`; token font stack lists Playfair Display then Inter (2.2, 2.3).
 - Image audit: informational images have `alt`, decorative images have empty `alt`/presentation role (9.1); below-the-fold images use `loading="lazy"` (11.2); assets are WebP/AVIF sized ≤1.5× display (11.1).
 - Landmark audit: `header`, `nav`, `main`, `footer` present on each page (9.3).
 - axe-core: labeled fields (9.2), contrast sampling (9.4).

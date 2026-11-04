@@ -1,37 +1,30 @@
-/* css/base.css — resets, base typography, landmark/layout base
+/* css/base.css — resets, base typography, section system, layout base
  *
- * This stylesheet defines the shared foundational styles for every page:
- * a modern reset, the base body typography, a single consistent heading
- * type scale (Req 2.6 — identical heading styles across all five pages),
- * base landmark/layout rules, responsive images, and a visible keyboard
+ * Foundational styles shared by every page: a modern reset, base body
+ * typography, ONE heading type scale (Req 2.6), a full-bleed section system
+ * with a centered content column, responsive media, and a visible keyboard
  * focus indicator (Req 9.5).
  *
  * IMPORTANT: this file references ONLY custom properties defined in
  * tokens.css. No raw hex color values and no font-family name literals
- * appear here — those live solely in tokens.css (Req 12.4). tokens.css
- * must be linked before this file so the variables resolve.
+ * appear here (Req 12.4). tokens.css must be linked before this file.
  */
 
 /* ---------------------------------------------------------------------------
  * Modern reset
  * ------------------------------------------------------------------------- */
 
-/* Border-box sizing everywhere, including pseudo-elements, so padding and
- * borders never widen an element past its declared size. This underpins the
- * no-horizontal-scroll responsive strategy (Req 8.3). */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
 
-/* Remove default margins/padding so spacing comes only from the token scale. */
 * {
   margin: 0;
   padding: 0;
 }
 
-/* Honor reduced-motion preferences for any transitions/animations added later. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -48,32 +41,27 @@
  * ------------------------------------------------------------------------- */
 
 html {
-  /* Smooth in-page anchor scrolling; respects reduced-motion override above. */
   scroll-behavior: smooth;
-  /* Prevent iOS text auto-inflation from overriding the 16px base. */
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }
 
 body {
   font-family: var(--font-body);
-  /* Base body text is 16px — the minimum readable body size (Req 8.4). */
+  /* Base body text is 16px, the minimum readable body size (Req 8.4). */
   font-size: 16px;
-  line-height: 1.5;
+  line-height: 1.65;
   color: var(--color-text);
   background: var(--color-bg);
   min-height: 100vh;
-  /* Crisper type rendering for the modern, professional brand feel. */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 /* ---------------------------------------------------------------------------
- * Heading type scale (Req 2.6 — defined ONCE, reused on every page)
- *
- * Headings use the primary (display) font; sizes, weights, line-heights, and
- * bottom margins are declared a single time here so h1–h6 are visually
- * identical across all five pages. Sizes use rem (relative to the 16px base).
+ * Heading type scale (Req 2.6): defined ONCE, reused on every page.
+ * Serif display headings (primary font) over Inter body copy.
  * ------------------------------------------------------------------------- */
 
 h1,
@@ -84,38 +72,18 @@ h5,
 h6 {
   font-family: var(--font-primary);
   color: var(--color-text);
-  line-height: 1.2;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
   margin-bottom: var(--space-3);
   font-weight: 700;
 }
 
-h1 {
-  font-size: 2.5rem;  /* 40px */
-}
-
-h2 {
-  font-size: 2rem;    /* 32px */
-}
-
-h3 {
-  font-size: 1.5rem;  /* 24px */
-  font-weight: 600;
-}
-
-h4 {
-  font-size: 1.25rem; /* 20px */
-  font-weight: 600;
-}
-
-h5 {
-  font-size: 1.125rem; /* 18px */
-  font-weight: 600;
-}
-
-h6 {
-  font-size: 1rem;     /* 16px */
-  font-weight: 600;
-}
+h1 { font-size: clamp(2rem, 4.2vw, 3.25rem); letter-spacing: -0.02em; }
+h2 { font-size: clamp(1.5rem, 2.6vw, 2.125rem); }
+h3 { font-size: 1.125rem; font-weight: 600; line-height: 1.25; }
+h4 { font-size: 1rem; font-weight: 600; }
+h5 { font-size: 0.9375rem; font-weight: 600; }
+h6 { font-size: 0.875rem; font-weight: 600; }
 
 /* ---------------------------------------------------------------------------
  * Flow content base
@@ -129,26 +97,30 @@ blockquote {
   margin-bottom: var(--space-3);
 }
 
-/* Keep list markers inside the content box; indent with the token scale. */
+p {
+  max-width: 68ch;
+}
+
 ul,
 ol {
   padding-left: var(--space-4);
 }
 
 a {
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
 }
 
 a:hover {
-  text-decoration: none;
+  text-decoration-thickness: 2px;
 }
 
 /* ---------------------------------------------------------------------------
- * Responsive media
- *
- * Images and other embedded media never overflow their container, which keeps
- * the layout within the viewport at every breakpoint (Req 8.3). */
+ * Responsive media (Req 8.3): never overflow their container.
+ * ------------------------------------------------------------------------- */
+
 img,
 picture,
 svg,
@@ -158,7 +130,6 @@ video {
   height: auto;
 }
 
-/* Form controls inherit typography rather than using UA defaults. */
 input,
 button,
 textarea,
@@ -168,7 +139,11 @@ select {
 }
 
 /* ---------------------------------------------------------------------------
- * Landmark / layout base (Req 9.3 landmarks styled consistently)
+ * Landmarks and the section system
+ *
+ * <main> is full width so sections can be full-bleed colour bands. Each
+ * top-level <section> centres its content in a column no wider than
+ * --container-max using responsive inline padding, with a minimum gutter.
  * ------------------------------------------------------------------------- */
 
 header,
@@ -181,29 +156,84 @@ aside {
   display: block;
 }
 
-/* Constrain line length and center the primary content region. */
 main {
   display: block;
   width: 100%;
-  max-width: var(--bp-desktop);
-  margin-inline: auto;
-  padding: var(--space-5) var(--space-3);
+  padding: 0;
+}
+
+main > section {
+  --gutter: max(var(--space-4), calc((100% - var(--container-max)) / 2));
+  padding-block: var(--space-7);
+  padding-inline: var(--gutter);
+}
+
+/* Surface variants for alternating bands */
+.section--alt  { background: var(--color-surface); }
+.section--sand { background: var(--color-surface-alt); }
+
+.section--dark {
+  background: var(--color-navy);
+  color: var(--color-text-inverse);
+}
+
+.section--dark h1,
+.section--dark h2,
+.section--dark h3,
+.section--dark h4 {
+  color: var(--color-text-inverse);
+}
+
+.section--dark a {
+  color: var(--color-accent);
+}
+
+/* Small uppercase kicker above headings */
+.eyebrow {
+  display: inline-block;
+  margin-bottom: var(--space-3);
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-accent-text);
+}
+
+.section--dark .eyebrow {
+  color: var(--color-accent);
+}
+
+/* Intro paragraph sizing */
+.lead {
+  font-size: 1.1875rem;
+  line-height: 1.7;
+  color: var(--color-text-muted);
+}
+
+.section--dark .lead {
+  color: rgba(255, 255, 255, 0.82);
 }
 
 /* ---------------------------------------------------------------------------
  * Visible keyboard focus indicator (Req 9.5)
  *
- * :focus-visible applies the outline only for keyboard/assistive navigation,
- * not mouse clicks, giving every interactive element a clearly visible focus
- * ring in the brand accent color. The default outline is never removed for
- * keyboard users. */
+ * :focus-visible shows the ring for keyboard/AT navigation only. The ring is
+ * deep gold on light surfaces and bright gold on dark surfaces, so it is
+ * always clearly visible.
+ * ------------------------------------------------------------------------- */
+
 :focus-visible {
-  outline: 3px solid var(--color-accent);
-  outline-offset: 2px;
+  outline: 3px solid var(--color-accent-text);
+  outline-offset: 3px;
 }
 
-/* Remove the UA focus ring only where :focus-visible is supported, so pointer
- * users don't see a ring but keyboard users always do. */
+.section--dark :focus-visible,
+header[data-component="site-nav"] :focus-visible,
+footer[data-component="site-footer"] :focus-visible {
+  outline-color: var(--color-accent);
+}
+
 :focus:not(:focus-visible) {
   outline: none;
 }

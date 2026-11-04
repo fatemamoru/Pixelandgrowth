@@ -19,8 +19,8 @@ The brand tagline is "Build. Connect. Grow."
 - **Contact_Form**: The form on the Contact Page collecting Visitor input.
 - **Service**: One of the agency offerings: website design, digital marketing, social media management, SEO, technology solutions.
 - **Demonstration_Project**: A sample project displayed in the Portfolio that is explicitly labeled as illustrative rather than real client work.
-- **Brand_Palette**: The defined set of colors — Navy blue (#142C4E), Teal (#20A68A), White (#FFFFFF), Light grey (#F3F6FA).
-- **Brand_Font**: The typeface used across the Website — Poppins or Inter.
+- **Brand_Palette**: The defined set of colors — core brand colors Deep navy (#0B1F3A), Warm gold (#C9A24B), White (#FFFFFF), and Ivory (#FAF7F0), together with the supporting shades declared alongside them in the shared styling location: a lifted navy (#14305A) for gradients, a deep gold (#7A5F1E) for accent text on light surfaces, a sand surface (#F1ECE0), a slate (#4B5A70) for muted text, and an error red (#9B1C1C) for validation messages.
+- **Brand_Font**: The typeface used across the Website — Playfair Display or Inter.
 - **Logo**: The horizontal brand mark with an icon on the left and the business name "Pixel & Growth" on the right.
 - **Breakpoint**: A defined viewport width range for mobile, tablet, or desktop layouts — mobile (320 to 767 pixels), tablet (768 to 1023 pixels), and desktop (1024 pixels and wider).
 - **Reusable_Component**: A shared front-end element (such as the Navigation_Menu, Footer, Service card, or button) used across multiple Pages.
@@ -50,8 +50,8 @@ The brand tagline is "Build. Connect. Grow."
 
 #### Acceptance Criteria
 
-1. WHEN a Visitor loads any of the five Pages, THE Website SHALL render all page elements using only the Brand_Palette consisting of Navy blue (#142C4E), Teal (#20A68A), White (#FFFFFF), and Light grey (#F3F6FA).
-2. WHEN a Visitor loads any of the five Pages, THE Website SHALL render all text content in the Brand_Font, applying Poppins as the primary font and Inter as the secondary font.
+1. WHEN a Visitor loads any of the five Pages, THE Website SHALL render all page elements using only the Brand_Palette consisting of Deep navy (#0B1F3A), Warm gold (#C9A24B), White (#FFFFFF), and Ivory (#FAF7F0), plus the supporting shades defined with them.
+2. WHEN a Visitor loads any of the five Pages, THE Website SHALL render all text content in the Brand_Font, applying Playfair Display as the primary font for headings and Inter as the secondary font for body text.
 3. IF the primary Brand_Font fails to load within 3 seconds, THEN THE Website SHALL render all text content in the secondary Brand_Font.
 4. WHEN a Visitor loads any of the five Pages, THE Website SHALL display the Logo as a horizontal mark with the icon positioned to the left of the business name.
 5. WHEN a Visitor loads the Home Page, THE Website SHALL display the tagline "Build. Connect. Grow.".
